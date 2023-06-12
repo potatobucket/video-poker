@@ -26,7 +26,7 @@ var deck = []
 func create_deck():
 	for s in suits:
 		for v in values:
-			deck.append(str(v + " " + s))
+			deck.append([v, s])
 
 func shuffle_deck():
 	Deck.deck.shuffle()

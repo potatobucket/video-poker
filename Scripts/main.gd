@@ -17,7 +17,7 @@ var randomPitch
 
 func _ready():
 	Deck.create_deck()
-	generate_cards()
+#	generate_cards()
 
 @warning_ignore("unused_parameter")
 func _process(delta):
@@ -63,7 +63,20 @@ func draw_hand():
 			hand.append(Deck.deck[topCard])
 	pass
 
+func show_hand():
+	for handCard in hand:
+		cardCopy = card.instantiate()
+		add_child(cardCopy)
+		var cardValue = handCard[0]
+		var cardSuit = handCard[1]
+		cardCopy.position = cardPos.position
+		cardCopy.cardFaces.set_animation(cardSuit)
+		cardCopy.cardFaces.set_frame(Deck.values[cardValue] - 1)
+		cardPos.position.x += cardWidth
+		print(cardValue + " " + cardSuit)
+	pass
+
 func _on_debug_button_pressed():
 	draw_hand()
-	print(hand)
+	show_hand()
 	pass

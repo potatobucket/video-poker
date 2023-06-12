@@ -1,8 +1,9 @@
-[gd_scene load_steps=72 format=3 uid="uid://8nh75cwsrf4k"]
+[gd_scene load_steps=74 format=3 uid="uid://8nh75cwsrf4k"]
 
 [ext_resource type="Script" path="res://Scripts/card.gd" id="1_5cw00"]
 [ext_resource type="Texture2D" uid="uid://dckas421q57lr" path="res://Sprites/playingCardBacks.png" id="2_re7vp"]
 [ext_resource type="Texture2D" uid="uid://b0fk2kplung7l" path="res://Sprites/playingCards.png" id="3_ej1hk"]
+[ext_resource type="FontFile" uid="uid://chmqry3s0qm6i" path="res://Fonts/Kenney Blocks.ttf" id="4_fnkbi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8i0yq"]
 atlas = ExtResource("2_re7vp")
@@ -501,6 +502,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Theme" id="Theme_8118m"]
+default_font = ExtResource("4_fnkbi")
+default_font_size = 42
+Font/colors/Color = Color(0, 0, 0, 1)
+Font/fonts/Font = ExtResource("4_fnkbi")
+
 [node name="card" type="Node2D"]
 script = ExtResource("1_5cw00")
 
@@ -509,3 +516,20 @@ position = Vector2(70, 100)
 sprite_frames = SubResource("SpriteFrames_uxute")
 animation = &"cardBack"
 offset = Vector2(2, -4)
+
+[node name="holdLabel" type="Label" parent="."]
+offset_top = 120.0
+offset_right = 140.0
+offset_bottom = 191.0
+rotation = -0.916822
+theme = SubResource("Theme_8118m")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "HOLD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="holdButton" type="TextureButton" parent="."]
+offset_right = 140.0
+offset_bottom = 190.0
+
+[connection signal="pressed" from="holdButton" to="." method="_on_hold_button_pressed"]

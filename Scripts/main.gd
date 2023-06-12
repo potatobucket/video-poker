@@ -3,8 +3,11 @@ extends Node2D
 @onready var cardPos = $cardPos
 @onready var debugButton = $debugButton
 @onready var cardShuffle = $cardShuffle
+@onready var cardDeal = $cardDeal
 @onready var card = preload("res://Scenes/card.tscn")
 @onready var cardCopy = card.instantiate()
+@onready var screenWidth = get_viewport_rect().size.y
+@onready var screenHeight = get_viewport_rect().size.x
 
 const carraigeReturn = 910
 const cardHeight = 95
@@ -61,22 +64,24 @@ func draw_hand():
 	if hand.size() != maxHandSize:
 		for topCard in range(0, maxHandSize):
 			hand.append(Deck.deck[topCard])
-	pass
 
 func show_hand():
 	for handCard in hand:
 		cardCopy = card.instantiate()
 		add_child(cardCopy)
+		cardDeal.set_pitch_scale(randomPitch)
+		cardDeal.play()
 		var cardValue = handCard[0]
 		var cardSuit = handCard[1]
 		cardCopy.position = cardPos.position
 		cardCopy.cardFaces.set_animation(cardSuit)
 		cardCopy.cardFaces.set_frame(Deck.values[cardValue] - 1)
-		cardPos.position.x += cardWidth
+		cardPos.position.x += get_viewport_rect().size.y / 5
+		await get_tree().create_timer(0.5).timeout
 		print(cardValue + " " + cardSuit)
-	pass
 
 func _on_debug_button_pressed():
 	draw_hand()
+
+func _on_card_shuffle_finished():
 	show_hand()
-	pass

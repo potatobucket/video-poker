@@ -1,20 +1,27 @@
 extends Node2D
 
+@onready var cardPos = $cardPos
 @onready var debugButton = $debugButton
+@onready var cardShuffle = $cardShuffle
 @onready var card = preload("res://Scenes/card.tscn")
 @onready var cardCopy = card.instantiate()
-@onready var cardPos = $cardPos
 
 const carraigeReturn = 910
 const cardHeight = 95
 const cardWidth = 70
 const frameReset = 13
+const maxHandSize = 5
 
 var hand = []
+var randomPitch
 
 func _ready():
 	Deck.create_deck()
 	generate_cards()
+
+@warning_ignore("unused_parameter")
+func _process(delta):
+	randomPitch = randf_range(0.5, 1.5)
 
 func generate_cards():
 	for i in range (0, 52):
@@ -47,5 +54,16 @@ func generate_cards():
 			cardCopy.cardFaces.set_frame(i % frameReset)
 			cardPos.position.x += cardWidth
 
+func draw_hand():
+	cardShuffle.set_pitch_scale(randomPitch)
+	cardShuffle.play()
+	Deck.shuffle_deck()
+	if hand.size() != maxHandSize:
+		for topCard in range(0, maxHandSize):
+			hand.append(Deck.deck[topCard])
+	pass
+
 func _on_debug_button_pressed():
-	print(str(get_child_count() - 2))
+	draw_hand()
+	print(hand)
+	pass

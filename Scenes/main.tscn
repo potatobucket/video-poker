@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dp57ql8bw65il"]
+[gd_scene load_steps=3 format=3 uid="uid://dp57ql8bw65il"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_gotlr"]
+[ext_resource type="AudioStream" uid="uid://c5c5i5k8r6qy3" path="res://Sounds/cardFan1.ogg" id="2_s6xyd"]
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_gotlr")
@@ -13,5 +14,8 @@ offset_bottom = 671.0
 text = "Debug"
 
 [node name="cardPos" type="Marker2D" parent="."]
+
+[node name="cardShuffle" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_s6xyd")
 
 [connection signal="pressed" from="debugButton" to="." method="_on_debug_button_pressed"]

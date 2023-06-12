@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp57ql8bw65il"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_gotlr"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_gotlr")
+
+[node name="debugButton" type="Button" parent="."]
+offset_left = 992.0
+offset_top = 640.0
+offset_right = 1050.0
+offset_bottom = 671.0
+text = "Debug"
+
+[node name="cardPos" type="Marker2D" parent="."]
+
+[connection signal="pressed" from="debugButton" to="." method="_on_debug_button_pressed"]

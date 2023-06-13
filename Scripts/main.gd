@@ -16,7 +16,9 @@ const frameReset = 13
 const maxHandSize = 5
 
 var hand = []
+var tempHand = []
 var randomPitch
+var deals = 0
 
 func _ready():
 	Deck.create_deck()
@@ -58,17 +60,23 @@ func generate_cards():
 			cardPos.position.x += cardWidth
 
 func draw_hand():
-	cardShuffle.set_pitch_scale(randomPitch)
-	cardShuffle.play()
-	Deck.shuffle_deck()
-	if hand.size() != maxHandSize:
-		for topCard in range(0, maxHandSize):
-			hand.append(Deck.deck[topCard])
+	if deals == 0:
+		cardShuffle.set_pitch_scale(randomPitch)
+		cardShuffle.play()
+		Deck.shuffle_deck()
+		if hand.size() != maxHandSize:
+			for topCard in range(0, maxHandSize):
+				hand.append(Deck.deck[topCard])
+		deals += 1
+	elif deals == 1:
+		redraw_cards()
+		pass
 
 func show_hand():
 	for handCard in hand:
 		cardCopy = card.instantiate()
 		add_child(cardCopy)
+		cardCopy.isHeld = false
 		cardDeal.set_pitch_scale(randomPitch)
 		cardDeal.play()
 		var cardValue = handCard[0]
@@ -78,7 +86,16 @@ func show_hand():
 		cardCopy.cardFaces.set_frame(Deck.values[cardValue] - 1)
 		cardPos.position.x += get_viewport_rect().size.y / 5
 		await get_tree().create_timer(0.5).timeout
-		print(cardValue + " " + cardSuit)
+#		print(cardValue + " " + cardSuit)
+
+func redraw_cards():
+	for cardInHand in hand.size():
+#		tempHand.append(cardInHand)
+		print(cardInHand)
+#	for checkedCard in hand:
+#		if cardCopy.isHeld == false:
+#			tempHand.append(checkedCard)
+#		print(tempHand)
 
 func _on_debug_button_pressed():
 	draw_hand()

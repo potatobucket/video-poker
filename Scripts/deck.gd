@@ -22,6 +22,8 @@ const values = {
 }
 
 var deck = []
+var shuffleCount = 0
+var shufflesExpected = 7
 
 func create_deck():
 	for s in suits:
@@ -29,10 +31,7 @@ func create_deck():
 			deck.append([v, s])
 
 func shuffle_deck():
-	Deck.deck.shuffle()
-	Deck.deck.shuffle()
-	Deck.deck.shuffle()
-	Deck.deck.shuffle()
-	Deck.deck.shuffle()
-	Deck.deck.shuffle()
-	Deck.deck.shuffle()
+	while shuffleCount < shufflesExpected:
+		deck.shuffle()
+		shuffleCount += 1
+		print(shuffleCount)

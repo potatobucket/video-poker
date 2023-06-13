@@ -22,42 +22,47 @@ var deals = 0
 
 func _ready():
 	Deck.create_deck()
-#	generate_cards()
+	generate_cards()
 
 @warning_ignore("unused_parameter")
 func _process(delta):
 	randomPitch = randf_range(0.5, 1.5)
+#	print(get_child_count())
 
 func generate_cards():
 	for i in range (0, 52):
 		if i <= 12:
 			cardCopy = card.instantiate()
 			add_child(cardCopy)
+			await get_tree().create_timer(0.01).timeout
 			cardCopy.position = cardPos.position
 			cardCopy.cardFaces.set_animation("spade")
 			cardCopy.cardFaces.set_frame(i)
-			cardPos.position.x += cardWidth
+			cardPos.position.x += cardWidth - cardWidth / 2
 		if i > 12 and i <= 25:
 			cardCopy = card.instantiate()
 			add_child(cardCopy)
-			cardCopy.position = Vector2(cardPos.position.x - carraigeReturn, cardPos.position.y + cardHeight)
+			await get_tree().create_timer(0.01).timeout
+			cardCopy.position = Vector2(cardPos.position.x - carraigeReturn / 2, cardPos.position.y + cardHeight)
 			cardCopy.cardFaces.set_animation("diamond")
 			cardCopy.cardFaces.set_frame(i % frameReset)
-			cardPos.position.x += cardWidth
+			cardPos.position.x += cardWidth - cardWidth / 2
 		if i > 25 and i <= 38:
 			cardCopy = card.instantiate()
 			add_child(cardCopy)
-			cardCopy.position = Vector2(cardPos.position.x - (carraigeReturn * 2), cardPos.position.y + cardHeight * 2)
+			await get_tree().create_timer(0.01).timeout
+			cardCopy.position = Vector2(cardPos.position.x - (carraigeReturn * 2) / 2, cardPos.position.y + cardHeight * 2)
 			cardCopy.cardFaces.set_animation("club")
 			cardCopy.cardFaces.set_frame(i % frameReset)
-			cardPos.position.x += cardWidth
+			cardPos.position.x += cardWidth - cardWidth / 2
 		if i > 38 and i <= 52:
 			cardCopy = card.instantiate()
 			add_child(cardCopy)
-			cardCopy.position = Vector2(cardPos.position.x - (carraigeReturn * 3), cardPos.position.y + cardHeight * 3)
+			await get_tree().create_timer(0.01).timeout
+			cardCopy.position = Vector2(cardPos.position.x - (carraigeReturn * 3) / 2, cardPos.position.y + cardHeight * 3)
 			cardCopy.cardFaces.set_animation("heart")
 			cardCopy.cardFaces.set_frame(i % frameReset)
-			cardPos.position.x += cardWidth
+			cardPos.position.x += cardWidth - cardWidth / 2
 
 func draw_hand():
 	if deals == 0:
@@ -69,7 +74,7 @@ func draw_hand():
 				hand.append(Deck.deck[topCard])
 		deals += 1
 	elif deals == 1:
-		redraw_cards()
+#		redraw_cards()
 		pass
 
 func show_hand():
@@ -88,10 +93,10 @@ func show_hand():
 		await get_tree().create_timer(0.5).timeout
 #		print(cardValue + " " + cardSuit)
 
-func redraw_cards():
-	for cardInHand in hand.size():
-#		tempHand.append(cardInHand)
-		print(cardInHand)
+#func redraw_cards():
+#	for cardInHand in hand.size():
+#		if cardInHand.isHeld == true:
+#			print(cardInHand)
 #	for checkedCard in hand:
 #		if cardCopy.isHeld == false:
 #			tempHand.append(checkedCard)

@@ -1,4 +1,5 @@
 extends Node2D
+class_name The_Deck
 
 const spade = "spade"
 const club = "club"
@@ -29,12 +30,15 @@ const values = {
 @export var waitTime = 0.01
 
 var deck = []
+var hand = []
 var shuffleCount = 0
 var shufflesExpected = 7
 var indexOfCardPrinted = 0
 
 func _ready():
 	create_deck()
+#	draw_hand()
+#	shuffle_deck()
 
 func create_deck():
 	for s in suits:
@@ -42,13 +46,23 @@ func create_deck():
 			var card = Card.new()
 			card.cardSuit = s
 			card.cardValue = v
+			card.cardName = str(v, s)
 			deck.append(card)
 
 func shuffle_deck():
 	for expected in shufflesExpected:
 		deck.shuffle()
 
+func draw_hand():
+	for handCard in hand:
+		handCard = deck[0]
+		deck.pop_front()
+
 func _on_texture_button_pressed():
-	for card in deck:
-		indexOfCardPrinted += 1
-		print("No. ", str(indexOfCardPrinted)," ", card)
+	draw_hand()
+	print("Done pressed")
+	for c in hand:
+		print(c)
+#	for card in deck:
+#		indexOfCardPrinted += 1
+#		print("No. ", str(indexOfCardPrinted)," ", card)

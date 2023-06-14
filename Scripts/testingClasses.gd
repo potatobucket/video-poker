@@ -1,6 +1,7 @@
 extends Node2D
+class_name Hand
 
-@onready var testDeck = TestDeck
+const maxHandSize = 5
 
 var card1
 var card2
@@ -9,22 +10,17 @@ var card4
 var card5
 var isHeld = false
 var objectDeck = []
-var hand = [
-	card1,
-	card2,
-	card3,
-	card4,
-	card5
-]
+var hand = []
+var deck = TestDeck
 
 func _ready():
-	objectDeck = testDeck.deck
-	show_hand()
+	objectDeck = deck.deck
+	draw_hand()
 #	print(objectDeck)
 
-func show_hand():
-	for handCard in hand:
-		handCard = objectDeck[0]
-		objectDeck.pop_front()
-		print(handCard.cardValue, " ", handCard.cardSuit)
-		await get_tree().create_timer(0.5).timeout
+func draw_hand():
+	for c in range(0, maxHandSize):
+		hand.append(deck.deck[c])
+#		print(hand[c].cardName)
+#		print(handCard.cardValue, " ", handCard.cardSuit, " ", objectDeck.size())
+#		await get_tree().create_timer(0.5).timeout

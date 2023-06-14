@@ -14,7 +14,17 @@ offset_right = 1040.0
 offset_bottom = 680.0
 text = "Debug"
 
+[node name="clearButton" type="Button" parent="."]
+offset_left = 768.0
+offset_top = 616.0
+offset_right = 896.0
+offset_bottom = 680.0
+text = "Clear Hand"
+
 [node name="cardPos" type="Marker2D" parent="."]
+position = Vector2(160, 64)
+
+[node name="cardPosReset" type="Marker2D" parent="."]
 position = Vector2(160, 64)
 
 [node name="cardShuffle" type="AudioStreamPlayer2D" parent="."]
@@ -25,3 +35,5 @@ metadata/_edit_lock_ = true
 stream = ExtResource("3_xxjeg")
 
 [connection signal="pressed" from="debug" to="." method="_on_debug_pressed"]
+[connection signal="pressed" from="clearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="finished" from="cardShuffle" to="." method="_on_card_shuffle_finished"]

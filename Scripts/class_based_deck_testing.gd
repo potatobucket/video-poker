@@ -38,7 +38,7 @@ var indexOfCardPrinted = 0
 func _ready():
 	create_deck()
 #	draw_hand()
-	shuffle_deck()
+#	shuffle_deck()
 
 func create_deck():
 	for s in suits:
@@ -60,7 +60,7 @@ func draw_hand():
 
 func _on_texture_button_pressed():
 	draw_hand()
-	print("Done pressed")
+#	print("Done pressed")
 	for c in hand:
 		print(c)
 #	for card in deck:

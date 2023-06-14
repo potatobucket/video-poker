@@ -24,15 +24,15 @@ func _ready():
 	cardFaces.set_frame(3)
 	cardFaces.set_scale(Vector2(half, half))
 
-#func hold_card():
-#	if holdLabel.visible != true:
-#		holdLabel.show()
-#		isHeld = true
-#		print(isHeld)
-#	else:
-#		holdLabel.hide()
-#		isHeld = false
-#		print(isHeld)
+func hold_card():
+	if holdLabel.visible != true:
+		holdLabel.show()
+		isHeld = true
+		print("The ", cardValue, " of ", cardSuit, " is being held.")
+	else:
+		holdLabel.hide()
+		isHeld = false
+		print("The ", cardValue, " of ", cardSuit, " is NOT being held.")
 
 #func redraw_cards():
 #	if isHeld == false:
@@ -40,5 +40,4 @@ func _ready():
 #		print(tempHand)
 
 func _on_hold_button_pressed():
-	pass
-#	hold_card()
+	hold_card()

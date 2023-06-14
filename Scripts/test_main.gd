@@ -21,18 +21,17 @@ var test = classTest
 var randomPitch
 var indexOfCardPrinted = 0
 var newHand = []
-var valueDictionary = {}
+var values = deck.values
 
 func _ready():
 	randomPitch = randf_range(0.5, 1.5)
-	valueDictionary = deck.values
 	pass
 
 func draw_hand():
 	for c in range(0, maxHandSize):
 		newHand.append(deck.deck[0])
 		deck.deck.pop_front()
-		print(valueDictionary[newHand[c].cardValue])
+#		print(valueDictionary[newHand[c].cardValue])
 	pass
 
 func show_hand():
@@ -40,11 +39,13 @@ func show_hand():
 	for handCard in newHand:
 		cardCopy = cardThing.instantiate()
 		add_child(cardCopy)
+		cardCopy.cardValue = handCard.cardValue
+		cardCopy.cardSuit = handCard.cardSuit
 		cardDeal.set_pitch_scale(randomPitch)
 		cardDeal.play()
 		cardCopy.position = cardPos.position
 		cardCopy.cardFaces.set_animation(handCard.cardSuit)
-		cardCopy.cardFaces.set_frame(valueDictionary[handCard.cardValue] - 1)
+		cardCopy.cardFaces.set_frame(values[handCard.cardValue] - 1)
 		cardPos.position.x += get_viewport_rect().size.y / 5
 		await get_tree().create_timer(0.5).timeout
 

@@ -15,7 +15,7 @@ offset_bottom = 680.0
 text = "Debug"
 
 [node name="cardPos" type="Marker2D" parent="."]
-position = Vector2(64, 64)
+position = Vector2(160, 64)
 
 [node name="cardShuffle" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_eqqbr")

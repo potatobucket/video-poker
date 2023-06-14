@@ -38,7 +38,7 @@ var indexOfCardPrinted = 0
 func _ready():
 	create_deck()
 #	draw_hand()
-#	shuffle_deck()
+	shuffle_deck()
 
 func create_deck():
 	for s in suits:

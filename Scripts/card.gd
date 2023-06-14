@@ -1,4 +1,5 @@
 extends Node2D
+class_name Card
 
 @onready var cardFaces = $cardFacesAndBacks
 @onready var holdLabel = $holdLabel
@@ -12,6 +13,8 @@ var cardBack = "cardBack"
 var half = 0.5
 var isHeld = false
 var tempHand = []
+var cardValue
+var cardSuit
 
 func _ready():
 	isHeld = false

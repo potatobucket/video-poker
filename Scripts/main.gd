@@ -19,14 +19,18 @@ var hand = []
 var tempHand = []
 var randomPitch
 var deals = 0
+var boolean = [false, true]
+var randomBoolean
 
 func _ready():
 	Deck.create_deck()
-	generate_cards()
+#	print("|".join(Deck.deck))
+#	generate_cards()
 
 @warning_ignore("unused_parameter")
 func _process(delta):
 	randomPitch = randf_range(0.5, 1.5)
+	randomBoolean = boolean[randi_range(0, 1)]
 #	print(get_child_count())
 
 func generate_cards():
@@ -63,6 +67,7 @@ func generate_cards():
 			cardCopy.cardFaces.set_animation("heart")
 			cardCopy.cardFaces.set_frame(i % frameReset)
 			cardPos.position.x += cardWidth - cardWidth / 2
+#	print(get_children()[8].isHeld)
 
 func draw_hand():
 	if deals == 0:
@@ -84,17 +89,16 @@ func show_hand():
 		cardCopy.isHeld = false
 		cardDeal.set_pitch_scale(randomPitch)
 		cardDeal.play()
-		var cardValue = handCard[0]
-		var cardSuit = handCard[1]
+		cardCopy.cardValue = handCard[0]
+		cardCopy.cardSuit = handCard[1]
 		cardCopy.position = cardPos.position
-		cardCopy.cardFaces.set_animation(cardSuit)
-		cardCopy.cardFaces.set_frame(Deck.values[cardValue] - 1)
+		cardCopy.cardFaces.set_animation(cardCopy.cardSuit)
+		cardCopy.cardFaces.set_frame(Deck.values[cardCopy.cardValue] - 1)
 		cardPos.position.x += get_viewport_rect().size.y / 5
 		await get_tree().create_timer(0.5).timeout
-#		print(cardValue + " " + cardSuit)
 
 #func redraw_cards():
-#	for cardInHand in hand.size():
+#	for cardInHand in hand:
 #		if cardInHand.isHeld == true:
 #			print(cardInHand)
 #	for checkedCard in hand:

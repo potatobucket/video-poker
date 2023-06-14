@@ -1,10 +1,15 @@
-extends Node
+extends Node2D
 
 const spade = "spade"
 const club = "club"
 const diamond = "diamond"
 const heart = "heart"
-const suits = [spade, diamond, club, heart]
+const suits = [
+	spade,
+	diamond,
+	club,
+	heart
+]
 const values = {
 	"ace" : 1,
 	"two" : 2,
@@ -21,17 +26,29 @@ const values = {
 	"king" : 13,
 }
 
+@export var waitTime = 0.01
+
 var deck = []
 var shuffleCount = 0
 var shufflesExpected = 7
+var indexOfCardPrinted = 0
+
+func _ready():
+	create_deck()
 
 func create_deck():
 	for s in suits:
 		for v in values:
-			deck.append([v, s])
+			var card = Card.new()
+			card.cardSuit = s
+			card.cardValue = v
+			deck.append(card)
 
 func shuffle_deck():
-	while shuffleCount < shufflesExpected:
+	for expected in shufflesExpected:
 		deck.shuffle()
-		shuffleCount += 1
-#		print(shuffleCount)
+
+func _on_texture_button_pressed():
+	for card in deck:
+		indexOfCardPrinted += 1
+		print("No. ", str(indexOfCardPrinted)," ", card)

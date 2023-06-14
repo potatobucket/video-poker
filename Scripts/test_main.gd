@@ -38,12 +38,10 @@ func draw_hand():
 func show_hand():
 #	add_child(cardCopy)
 	for handCard in newHand:
-#		cardThing.instantiate()
+		cardCopy = cardThing.instantiate()
 		add_child(cardCopy)
 		cardDeal.set_pitch_scale(randomPitch)
 		cardDeal.play()
-#		cardCopy.cardValue = handCard[0]
-#		cardCopy.cardSuit = handCard[1]
 		cardCopy.position = cardPos.position
 		cardCopy.cardFaces.set_animation(handCard.cardSuit)
 		cardCopy.cardFaces.set_frame(valueDictionary[handCard.cardValue] - 1)

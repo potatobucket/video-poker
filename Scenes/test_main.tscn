@@ -15,6 +15,7 @@ offset_bottom = 680.0
 text = "Draw"
 
 [node name="clearButton" type="Button" parent="."]
+visible = false
 offset_left = 768.0
 offset_top = 616.0
 offset_right = 896.0

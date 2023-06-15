@@ -20,8 +20,6 @@ var card = Card
 var deck = TestDeck
 var test = classTest
 var randomPitch
-var randTorF = [true, false]
-var randBool
 var indexOfCardPrinted = 0
 var deals = 0
 var newHand = []

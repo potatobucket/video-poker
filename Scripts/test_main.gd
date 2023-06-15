@@ -28,9 +28,13 @@ var values = deck.values
 var discardPile = []
 var handFinished = false
 var childToRemove = 6
+var firstCard = -5
+var lastCard = 0
+var fiveHundredUnitsOffscreen
 
 #-- initializes the scene
 func _ready():
+	fiveHundredUnitsOffscreen = screenHeight + 500
 	drawButton.set_text("Draw")
 	randomPitch = randf_range(0.5, 1.5)
 	cardShuffle.set_pitch_scale(randomPitch)
@@ -98,32 +102,16 @@ func draw_new_hand():
 	deals += 1
 
 #-- discards the cards that you haven't held
+#-- the first bunch of things is to clear the screen
+#-- 'cause I couldn't figure out how to do that otherwise
+#-- if Toby Fox can have 1,000 lines of if-then statements
+#-- as a dialogue manager I can have a little bit of janky code
 func discard_unheld_cards():
-	if get_child(-5).held == true:
-		get_child(-5).holdLabel.hide()
-		tempHand.append(get_child(-5))
-	else:
-		get_child(-5).queue_free()
-	if get_child(-4).held == true:
-		get_child(-4).holdLabel.hide()
-		tempHand.append(get_child(-4))
-	else:
-		get_child(-4).queue_free()
-	if get_child(-3).held == true:
-		get_child(-3).holdLabel.hide()
-		tempHand.append(get_child(-3))
-	else:
-		get_child(-3).queue_free()
-	if get_child(-2).held == true:
-		get_child(-2).holdLabel.hide()
-		tempHand.append(get_child(-2))
-	else:
-		get_child(-2).queue_free()
-	if get_child(-1).held == true:
-		get_child(-1).holdLabel.hide()
-		tempHand.append(get_child(-1))
-	else:
-		get_child(-1).queue_free()
+	for bling in range(firstCard, lastCard):
+		get_child(bling).position.x = fiveHundredUnitsOffscreen
+		if get_child(bling).held == true:
+			get_child(bling).holdLabel.hide()
+			tempHand.append(get_child(bling))
 	newHand.clear()
 	newHand = tempHand
 

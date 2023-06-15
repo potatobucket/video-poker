@@ -39,6 +39,7 @@ func _ready():
 	create_deck()
 	shuffle_deck()
 
+#-- creates a deck full of card objects
 func create_deck():
 	for s in suits:
 		for v in values:
@@ -48,14 +49,18 @@ func create_deck():
 			card.cardName = str(v, s)
 			deck.append(card)
 
+#-- shuffles the deck as many times as is expected (defaults to seven)
 func shuffle_deck():
 	for expected in shufflesExpected:
 		deck.shuffle()
 
+#-- I think I moved this to the main scene but see other
+#-- comments about superstition and why I won't delete it
 func draw_hand():
 	for handCard in hand:
 		handCard = deck[0]
 		deck.pop_front()
 
+#-- was using this to debug stuff
 func _on_texture_button_pressed():
 	draw_hand()

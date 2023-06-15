@@ -29,11 +29,15 @@ var discardPile = []
 var handFinished = false
 var childToRemove = 6
 
+#-- initializes the scene
 func _ready():
 	drawButton.set_text("Draw")
 	randomPitch = randf_range(0.5, 1.5)
 	cardShuffle.set_pitch_scale(randomPitch)
 
+#-- sets the random pitch for when the cards are dealt
+#-- also keeps track of if the "draw" button signifies
+#-- the first or second draw
 func _process(_delta):
 	randomPitch = randf_range(0.5, 1.5)
 	if deals == 1:
@@ -41,6 +45,7 @@ func _process(_delta):
 	else:
 		drawButton.set_text("Draw")
 
+#-- handles if the draw is a new hand or the second hand
 func draw_hand():
 	if deals == 0 and handFinished == false:
 		draw_new_hand()
@@ -50,6 +55,7 @@ func draw_hand():
 		show_second_hand()
 		handFinished = true
 
+#-- handles showing the initial new hand
 func show_hand():
 	for handCard in newHand:
 		cardCopy = cardThing.instantiate()
@@ -65,6 +71,8 @@ func show_hand():
 		cardPos.position.x += get_viewport_rect().size.y / 5
 		await get_tree().create_timer(0.5).timeout
 
+#-- handles showing the second hand after the player discards and
+#-- draws new cards
 func show_second_hand():
 	for handCard in newHand:
 		cardCopy = cardThing.instantiate()
@@ -79,6 +87,7 @@ func show_second_hand():
 		cardPosReset.position.x += get_viewport_rect().size.y / 5
 		await get_tree().create_timer(0.5).timeout
 
+#-- draws the first hand of cards
 func draw_new_hand():
 	for c in range(0, maxHandSize):
 		newHand.append(deck.deck[0])
@@ -88,6 +97,7 @@ func draw_new_hand():
 	discardPile = newHand.duplicate()
 	deals += 1
 
+#-- discards the cards that you haven't held
 func discard_unheld_cards():
 	if get_child(6).held == true:
 		get_child(6).holdLabel.hide()
@@ -117,12 +127,18 @@ func discard_unheld_cards():
 	newHand.clear()
 	newHand = tempHand
 
+#-- "debug" stands for when this button was used to figure
+#-- things out and then I changed it to "drawButton" and I'm
+#-- too lazy to change this part
 func _on_debug_pressed():
 	draw_hand()
 
+#-- waits until the shuffle sound is over to display the initial hand of cards
 func _on_card_shuffle_finished():
 	show_hand()
 
+#-- after the unheld cards are discarded this function refills the
+#-- player's hand with new cards back up to five
 func refill_hand_with_new_cards():
 	if deals == 1 and handFinished == false:
 		for c in range(0, maxHandSize - newHand.size()):
@@ -131,5 +147,6 @@ func refill_hand_with_new_cards():
 		handFinished = true
 		cardPos = cardPosReset.position
 
+#-- superstitiously held for superstitious reasons
 func _on_clear_button_pressed():
 	pass

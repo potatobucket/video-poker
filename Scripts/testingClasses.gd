@@ -13,10 +13,12 @@ var objectDeck = []
 var hand = []
 var deck = TestDeck
 
+#-- should probably be deleted but, y'know, superstition
 func _ready():
 	objectDeck = deck.deck
 	draw_hand()
 
+#-- should probably be deleted but, y'know, superstition
 func draw_hand():
 	for c in range(0, maxHandSize):
 		hand.append(deck.deck[c])

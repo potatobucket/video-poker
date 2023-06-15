@@ -46,21 +46,10 @@ func _process(delta):
 func draw_hand():
 	if deals == 0 and handFinished == false:
 		draw_new_hand()
-#		for c in range(0, maxHandSize):
-#			newHand.append(deck.deck[0])
-#			deck.deck.pop_front()
-#		cardShuffle.set_pitch_scale(randomPitch)
-#		cardShuffle.play()
-#		discardPile = newHand.duplicate()
-#		deals += 1
 	elif deals == 1 and handFinished == false:
-		newHand.clear()
-		for c in range(0, maxHandSize):
-			newHand.append(deck.deck[0])
-			deck.deck.pop_front()
-		show_hand()
-		print(newHand)
-		print(discardPile)
+		discard_unheld_cards()
+		refill_hand_with_new_cards()
+		show_second_hand()
 		handFinished = true
 
 func show_hand():
@@ -145,6 +134,4 @@ func refill_hand_with_new_cards():
 		cardPos = cardPosReset.position
 
 func _on_clear_button_pressed():
-	discard_unheld_cards()
-	refill_hand_with_new_cards()
-	show_second_hand()
+	pass

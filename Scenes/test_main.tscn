@@ -12,7 +12,7 @@ offset_left = 912.0
 offset_top = 616.0
 offset_right = 1040.0
 offset_bottom = 680.0
-text = "Debug"
+text = "Draw"
 
 [node name="clearButton" type="Button" parent="."]
 offset_left = 768.0

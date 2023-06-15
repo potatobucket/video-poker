@@ -99,31 +99,31 @@ func draw_new_hand():
 
 #-- discards the cards that you haven't held
 func discard_unheld_cards():
-	if get_child(6).held == true:
-		get_child(6).holdLabel.hide()
-		tempHand.append(get_child(6))
+	if get_child(-5).held == true:
+		get_child(-5).holdLabel.hide()
+		tempHand.append(get_child(-5))
 	else:
-		get_child(6).queue_free()
-	if get_child(7).held == true:
-		get_child(7).holdLabel.hide()
-		tempHand.append(get_child(7))
+		get_child(-5).queue_free()
+	if get_child(-4).held == true:
+		get_child(-4).holdLabel.hide()
+		tempHand.append(get_child(-4))
 	else:
-		get_child(7).queue_free()
-	if get_child(8).held == true:
-		get_child(8).holdLabel.hide()
-		tempHand.append(get_child(8))
+		get_child(-4).queue_free()
+	if get_child(-3).held == true:
+		get_child(-3).holdLabel.hide()
+		tempHand.append(get_child(-3))
 	else:
-		get_child(8).queue_free()
-	if get_child(9).held == true:
-		get_child(9).holdLabel.hide()
-		tempHand.append(get_child(9))
+		get_child(-3).queue_free()
+	if get_child(-2).held == true:
+		get_child(-2).holdLabel.hide()
+		tempHand.append(get_child(-2))
 	else:
-		get_child(9).queue_free()
-	if get_child(10).held == true:
-		get_child(10).holdLabel.hide()
-		tempHand.append(get_child(10))
+		get_child(-2).queue_free()
+	if get_child(-1).held == true:
+		get_child(-1).holdLabel.hide()
+		tempHand.append(get_child(-1))
 	else:
-		get_child(10).queue_free()
+		get_child(-1).queue_free()
 	newHand.clear()
 	newHand = tempHand
 

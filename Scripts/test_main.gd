@@ -44,15 +44,12 @@ func _ready():
 #-- the first or second draw
 func _process(_delta):
 	randomPitch = randf_range(0.5, 1.5)
-	if deals == 1:
-		drawButton.set_text("Draw again")
-	else:
-		drawButton.set_text("Draw")
 
 #-- handles if the draw is a new hand or the second hand
 func draw_hand():
 	if deals == 0 and handFinished == false:
 		draw_new_hand()
+		drawButton.set_text("Draw again")
 	elif deals == 1 and handFinished == false:
 		discard_unheld_cards()
 		refill_hand_with_new_cards()
@@ -102,11 +99,7 @@ func draw_new_hand():
 	discardPile = newHand.duplicate()
 	deals += 1
 
-#-- discards the cards that you haven't held
-#-- the first bunch of things is to clear the screen
-#-- 'cause I couldn't figure out how to do that otherwise
-#-- if Toby Fox can have 1,000 lines of if-then statements
-#-- as a dialogue manager I can have a little bit of janky code
+#-- I finally managed to make this a "for" loop, suckers!
 func discard_unheld_cards():
 	for bling in range(firstCard, lastCard):
 		get_child(bling).position.x = fiveHundredUnitsOffscreen

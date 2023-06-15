@@ -5,18 +5,32 @@ This project happened because I wanted to make a video poker app like those litt
 
 Card assets, sound effects and font by https://kenney.nl
 
-Boardgame pack v2 by Kenney Vleugels (www.kenney.nl)
 
+------------------------------
 ------------------------------
 Attribution for Kenney assets:
 
-CC0 License (Creative Commons Zero)
-http://creativecommons.org/publicdomain/zero/1.0/
+Boardgame pack v2 by Kenney Vleugels (www.kenney.nl)
+Font package (free)
 
-You may use these graphics in personal and commercial projects.
-Credit (Kenney or www.kenney.nl) would be nice but is not mandatory.
+Created/distributed by Kenney (www.kenney.nl)
 
 ------------------------------
 
+License: (Creative Commons Zero, CC0)
+http://creativecommons.org/publicdomain/zero/1.0/
+
+This content is free to use in personal, educational and commercial projects.
+Support us by crediting (Kenney or www.kenney.nl), this is not mandatory.
+
+------------------------------
+
+Donate:   http://support.kenney.nl
+Request:  http://request.kenney.nl
+Patreon:  http://patreon.com/kenney/
+
 More information:
 www.kenney.nl
+
+Follow on Twitter for updates:
+@KenneyNL

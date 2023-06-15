@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var cardPos = $cardPos
 @onready var cardPosReset = $cardPosReset
-@onready var debugButton = $debug
+@onready var drawButton = $drawButton
 @onready var cardShuffle = $cardShuffle
 @onready var cardDeal = $cardDeal
 @onready var cardThing = preload("res://Scenes/card.tscn")
@@ -30,16 +30,16 @@ var handFinished = false
 var childToRemove = 6
 
 func _ready():
-	debugButton.set_text("Draw")
+	drawButton.set_text("Draw")
 	randomPitch = randf_range(0.5, 1.5)
 	cardShuffle.set_pitch_scale(randomPitch)
 
-func _process(delta):
+func _process(_delta):
 	randomPitch = randf_range(0.5, 1.5)
 	if deals == 1:
-		debugButton.set_text("Draw again")
+		drawButton.set_text("Draw again")
 	else:
-		debugButton.set_text("Draw")
+		drawButton.set_text("Draw")
 
 func draw_hand():
 	if deals == 0 and handFinished == false:

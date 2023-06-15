@@ -22,7 +22,7 @@ func _ready():
 	cardFaces.set_frame(3)
 	cardFaces.set_scale(Vector2(half, half))
 
-func _process(delta):
+func _process(_delta):
 	detect_held_status()
 	pass
 

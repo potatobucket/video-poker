@@ -56,6 +56,7 @@ func draw_hand():
 	elif deals == 1 and handFinished == false:
 		discard_unheld_cards()
 		refill_hand_with_new_cards()
+		newHand.sort_custom(sort_by_suit_and_then_value)
 		show_second_hand()
 		handFinished = true
 
@@ -128,12 +129,21 @@ func _on_card_shuffle_finished():
 #-- after the unheld cards are discarded this function refills the
 #-- player's hand with new cards back up to five
 func refill_hand_with_new_cards():
+	newHand.sort_custom(sort_by_suit_and_then_value)
 	if deals == 1 and handFinished == false:
 		for c in range(0, maxHandSize - newHand.size()):
 			newHand.append(deck.deck[0])
 			deck.deck.pop_front()
 		handFinished = true
 		cardPos = cardPosReset.position
+
+func sort_by_suit_and_then_value(a, b):
+	if a.cardSuit == b.cardSuit:
+		if values[a.cardValue] < values[b.cardValue]:
+			return true
+	elif values[a.cardValue] > values[b.cardValue]:
+		return true
+	return false
 
 #-- superstitiously held for superstitious reasons
 func _on_clear_button_pressed():

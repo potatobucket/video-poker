@@ -8,6 +8,7 @@ Card assets, sound effects and font by https://kenney.nl
 Boardgame pack v2 by Kenney Vleugels (www.kenney.nl)
 
 ------------------------------
+Attribution for Kenney assets:
 
 CC0 License (Creative Commons Zero)
 http://creativecommons.org/publicdomain/zero/1.0/

@@ -19,7 +19,7 @@ var cardName = ""
 
 func _ready():
 #	isHeld = false
-	holdLabel.hide()
+#	holdLabel.hide()
 	cardFaces.set_animation(cardBack)
 	cardFaces.set_frame(3)
 	cardFaces.set_scale(Vector2(half, half))
@@ -39,11 +39,11 @@ func _process(delta):
 func hold_card():
 	if holdLabel.visible != true:
 		holdLabel.show()
-		held = true
+#		held = true
 #		print(isHeld)
 	else:
 		holdLabel.hide()
-		held = false
+#		held = false
 #		print(isHeld)
 
 func detect_held_status():
@@ -57,13 +57,17 @@ func detect_held_status():
 #		print(tempHand)
 
 func _on_hold_button_pressed():
-	pass
+	if held == false:
+		held = true
+	elif held == true:
+		held = false
 #	isHeld = true
 #	if tempHand.is_empty():
 #		tempHand.append(self)
 #	print("Totally pressed, man")
 #	pass
-#	hold_card()
-
-func _on_hold_button_test_pressed():
 	hold_card()
+#	print(held)
+
+func _on_hold_label_visibility_changed():
+	print(held)

@@ -519,6 +519,7 @@ animation = &"cardBack"
 offset = Vector2(2, -4)
 
 [node name="holdLabel" type="Label" parent="."]
+visible = false
 offset_top = 120.0
 offset_right = 140.0
 offset_bottom = 191.0
@@ -535,12 +536,5 @@ offset_right = 140.0
 offset_bottom = 190.0
 metadata/_edit_use_anchors_ = true
 
-[node name="holdButtonTest" type="Button" parent="."]
-offset_left = 32.0
-offset_top = 226.0
-offset_right = 120.0
-offset_bottom = 290.0
-text = "HOLD"
-
+[connection signal="visibility_changed" from="holdLabel" to="." method="_on_hold_label_visibility_changed"]
 [connection signal="pressed" from="holdButton" to="." method="_on_hold_button_pressed"]
-[connection signal="pressed" from="holdButtonTest" to="." method="_on_hold_button_test_pressed"]

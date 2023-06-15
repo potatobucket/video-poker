@@ -25,6 +25,7 @@ var randBool
 var indexOfCardPrinted = 0
 var deals = 0
 var newHand = []
+var tempHand = []
 var values = deck.values
 var discardPile = []
 var handFinished = false
@@ -37,7 +38,8 @@ func _ready():
 
 func _process(delta):
 	randomPitch = randf_range(0.5, 1.5)
-	randBool = randTorF[randi_range(0, 1)]
+#	if !newHand.is_empty():
+#		print(newHand[2].held)
 	pass
 
 func draw_hand():
@@ -76,6 +78,7 @@ func show_hand():
 		add_child(cardCopy)
 		cardCopy.cardValue = handCard.cardValue
 		cardCopy.cardSuit = handCard.cardSuit
+		cardCopy.held = false
 #		cardCopy.isHeld = randBool
 		cardDeal.set_pitch_scale(randomPitch)
 		cardDeal.play()
@@ -83,6 +86,7 @@ func show_hand():
 		cardCopy.cardFaces.set_animation(handCard.cardSuit)
 		cardCopy.cardFaces.set_frame(values[handCard.cardValue] - 1)
 		cardPos.position.x += get_viewport_rect().size.y / 5
+#		print(cardCopy.held)
 #		print_a_lot_of_things()
 		await get_tree().create_timer(0.5).timeout
 
@@ -118,9 +122,36 @@ func print_a_lot_of_things():
 	print(get_child_count())
 	pass
 
+func discard_unheld_cards():
+	if get_child(6).held == true:
+		tempHand.append(get_child(6))
+	else:
+		get_child(6).queue_free()
+	if get_child(7).held == true:
+		tempHand.append(get_child(7))
+	else:
+		get_child(7).queue_free()
+	if get_child(8).held == true:
+		tempHand.append(get_child(8))
+	else:
+		get_child(8).queue_free()
+	if get_child(9).held == true:
+		tempHand.append(get_child(9))
+	else:
+		get_child(9).queue_free()
+	if get_child(10).held == true:
+		tempHand.append(get_child(10))
+	else:
+		get_child(10).queue_free()
+#	print(tempHand)
+	newHand.clear()
+	newHand = tempHand
+#	print(newHand)
+
 func _on_debug_pressed():
 #	print_a_lot_of_things()
 	draw_hand()
+	await get_tree().create_timer(5.0).timeout
 #	cardCopy._on_hold_button_pressed()
 #	show_hand()
 #	print_a_lot_of_things()
@@ -129,21 +160,23 @@ func _on_card_shuffle_finished():
 	show_hand()
 
 func _on_clear_button_pressed():
+	discard_unheld_cards()
+#	print(newHand[0].held)
 	if deals == 1 and handFinished == false:
-		newHand.clear()
-		for c in range(0, maxHandSize):
+#		newHand.clear()
+		for c in range(0, maxHandSize - newHand.size()):
 			newHand.append(deck.deck[0])
 			deck.deck.pop_front()
-		print(newHand)
-		print(discardPile)
+##		print(newHand[0].held)
+##		print(discardPile)
 		handFinished = true
-#		if childToRemove < 10:
-#			get_child(childToRemove).queue_free()
-#			childToRemove += 1
-		get_child(6).queue_free()
-		get_child(7).queue_free()
-		get_child(8).queue_free()
-		get_child(9).queue_free()
-		get_child(10).queue_free()
+##		if childToRemove < 10:
+##			get_child(childToRemove).queue_free()
+##			childToRemove += 1
+#		get_child(6).queue_free()
+#		get_child(7).queue_free()
+#		get_child(8).queue_free()
+#		get_child(9).queue_free()
+#		get_child(10).queue_free()
 		cardPos = cardPosReset.position
 	show_second_hand()

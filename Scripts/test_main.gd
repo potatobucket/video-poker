@@ -10,6 +10,13 @@ extends Node2D
 @onready var screenWidth = get_viewport_rect().size.y
 @onready var screenHeight = get_viewport_rect().size.x
 
+enum phase {
+	start,
+	draw_one,
+	draw_two,
+	game_finished
+}
+
 const carraigeReturn = 910
 const cardHeight = 95
 const cardWidth = 70

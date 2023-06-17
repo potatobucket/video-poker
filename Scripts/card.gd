@@ -4,6 +4,29 @@ class_name Card
 @onready var cardFaces = $cardFacesAndBacks
 @onready var holdLabel = $holdLabel
 @onready var holdButton = $holdButton
+@onready var particleOrigin = $particleMarker
+@onready var clubParticle = preload("res://Scenes/clubs_particles.tscn")
+@onready var clubCopy = clubParticle.instantiate()
+@onready var diamondParticle = preload("res://Scenes/diamonds_particles.tscn")
+@onready var diamondCopy = diamondParticle.instantiate()
+@onready var heartParticle = preload("res://Scenes/hearts_particles.tscn")
+@onready var heartCopy = heartParticle.instantiate()
+@onready var spadeParticle = preload("res://Scenes/spades_particles.tscn")
+@onready var spadeCopy = spadeParticle.instantiate()
+
+enum suitHolder {
+	club,
+	diamond,
+	heart,
+	spade
+}
+
+var suitDic = {
+	"club" : suitHolder.club,
+	"diamond" : suitHolder.diamond,
+	"heart" : suitHolder.heart,
+	"spade" : suitHolder.spade
+}
 
 var spadeAnim = "spade"
 var diamondAnim = "diamond"
@@ -41,6 +64,22 @@ func detect_held_status():
 	if held == false:
 		tempHand.append(self)
 	pass
+
+func emit_particles_that_match_the_suit_of_the_card(suit):
+	suit = suitDic[suit]
+	match (suit):
+		suitHolder.club:
+			particleOrigin.add_child(clubCopy)
+			clubCopy.get_child(0).set_emitting(true)
+		suitHolder.diamond:
+			particleOrigin.add_child(diamondCopy)
+			diamondCopy.get_child(0).set_emitting(true)
+		suitHolder.heart:
+			particleOrigin.add_child(heartCopy)
+			heartCopy.get_child(0).set_emitting(true)
+		suitHolder.spade:
+			particleOrigin.add_child(spadeCopy)
+			spadeCopy.get_child(0).set_emitting(true)
 
 #-- sets whether or not a card is held when you click it
 func _on_hold_button_pressed():

@@ -78,6 +78,7 @@ func show_hand():
 		cardCopy.cardFaces.set_animation(handCard.cardSuit)
 		cardCopy.cardFaces.set_frame(values[handCard.cardValue] - 1)
 		cardPos.position.x += get_viewport_rect().size.y / 5
+		cardCopy.emit_particles_that_match_the_suit_of_the_card(cardCopy.cardSuit)
 		await get_tree().create_timer(0.5).timeout
 
 #-- handles showing the second hand after the player discards and
@@ -94,6 +95,7 @@ func show_second_hand():
 		cardCopy.cardFaces.set_animation(handCard.cardSuit)
 		cardCopy.cardFaces.set_frame(values[handCard.cardValue] - 1)
 		cardPosReset.position.x += get_viewport_rect().size.y / 5
+		cardCopy.emit_particles_that_match_the_suit_of_the_card(cardCopy.cardSuit)
 		await get_tree().create_timer(0.5).timeout
 
 #-- draws the first hand of cards

@@ -509,8 +509,11 @@ Font/colors/Color = Color(0, 0, 0, 1)
 Font/fonts/Font = ExtResource("4_fnkbi")
 
 [node name="card" type="Node2D"]
-position = Vector2(-256, -320)
+position = Vector2(504, 224)
 script = ExtResource("1_5cw00")
+
+[node name="particleMarker" type="Marker2D" parent="."]
+position = Vector2(72, 96)
 
 [node name="cardFacesAndBacks" type="AnimatedSprite2D" parent="."]
 position = Vector2(70, 100)

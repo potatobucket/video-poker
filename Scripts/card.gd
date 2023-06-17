@@ -65,6 +65,8 @@ func detect_held_status():
 		tempHand.append(self)
 	pass
 
+#-- I don't know if, technically speaking, this NEEDED to be a match case
+#-- but boy do I feel fancy for having done it
 func emit_particles_that_match_the_suit_of_the_card(suit):
 	suit = suitDic[suit]
 	match (suit):

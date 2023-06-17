@@ -5,6 +5,8 @@ This project happened because I wanted to make a video poker app like those litt
 
 Card assets, sound effects and font by https://kenney.nl
 
+Background texture from https://polyhaven.com/
+
 
 ------------------------------
 ------------------------------
@@ -37,3 +39,9 @@ www.kenney.nl
 
 Follow on Twitter for updates:
 @KenneyNL
+
+------------------------------
+Attribution for PolyHaven assets:
+
+Fabric Pattern 07 by Rob Tuytel
+https://www.artstation.com/tuytel

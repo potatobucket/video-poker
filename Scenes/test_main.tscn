@@ -1,12 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://7hmqrf7568f8"]
+[gd_scene load_steps=5 format=3 uid="uid://7hmqrf7568f8"]
 
 [ext_resource type="Script" path="res://Scripts/test_main.gd" id="1_5tkqv"]
 [ext_resource type="AudioStream" uid="uid://c5c5i5k8r6qy3" path="res://Sounds/cardFan1.ogg" id="2_eqqbr"]
 [ext_resource type="AudioStream" uid="uid://husgcfb764ay" path="res://Sounds/cardPlace1.ogg" id="3_xxjeg"]
+[ext_resource type="Texture2D" uid="uid://1srq2qawpi1f" path="res://Textures/fabric_pattern_07_col_1_4k.png" id="4_1r08f"]
 
 [node name="testMain" type="Node2D"]
 script = ExtResource("1_5tkqv")
 metadata/_edit_lock_ = true
+
+[node name="bgTexture" type="TextureRect" parent="."]
+offset_right = 1080.0
+offset_bottom = 728.0
+texture = ExtResource("4_1r08f")
+expand_mode = 1
 
 [node name="drawButton" type="Button" parent="."]
 offset_left = 912.0

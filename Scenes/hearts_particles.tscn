@@ -27,14 +27,14 @@ point_count = 2
 curve = SubResource("Curve_l7364")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qwamu"]
-lifetime_randomness = 0.5
+lifetime_randomness = 0.3
 emission_shape = 3
-emission_box_extents = Vector3(140, 190, 1)
+emission_box_extents = Vector3(35, 47.5, 1)
 particle_flag_disable_z = true
 spread = 180.0
 gravity = Vector3(0, 0, 0)
-initial_velocity_min = 100.0
-initial_velocity_max = 200.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
 angular_velocity_curve = SubResource("CurveTexture_ywdsx")
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0

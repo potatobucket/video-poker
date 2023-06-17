@@ -6,6 +6,7 @@
 
 [node name="testMain" type="Node2D"]
 script = ExtResource("1_5tkqv")
+metadata/_edit_lock_ = true
 
 [node name="drawButton" type="Button" parent="."]
 offset_left = 912.0
@@ -24,9 +25,11 @@ text = "Clear Hand"
 
 [node name="cardPos" type="Marker2D" parent="."]
 position = Vector2(160, 64)
+metadata/_edit_lock_ = true
 
 [node name="cardPosReset" type="Marker2D" parent="."]
 position = Vector2(160, 64)
+metadata/_edit_lock_ = true
 
 [node name="cardShuffle" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_eqqbr")

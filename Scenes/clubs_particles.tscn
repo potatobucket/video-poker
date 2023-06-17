@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://jaj7hq38y2xo"]
+
+[ext_resource type="Texture2D" uid="uid://ckmfu7vnfml6" path="res://Sprites/card_clubs_A.png" id="1_62mkf"]
+
+[sub_resource type="Curve" id="Curve_661hr"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, -144), 0.0, 0.0, 0, 0, Vector2(1, 52.3636), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ywdsx"]
+curve = SubResource("Curve_661hr")
+
+[sub_resource type="Gradient" id="Gradient_mxb71"]
+offsets = PackedFloat32Array(0.385185, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_w5xeh"]
+gradient = SubResource("Gradient_mxb71")
+
+[sub_resource type="Curve" id="Curve_l7364"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_aphm5"]
+curve = SubResource("Curve_l7364")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qwamu"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+angular_velocity_curve = SubResource("CurveTexture_ywdsx")
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_min = -360.0
+angle_max = 360.0
+scale_min = 5.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_aphm5")
+color_ramp = SubResource("GradientTexture1D_w5xeh")
+
+[node name="ParticleController" type="Node2D"]
+
+[node name="Cardicles" type="GPUParticles2D" parent="."]
+position = Vector2(500, 300)
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_qwamu")
+texture = ExtResource("1_62mkf")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+randomness = 0.5
+fixed_fps = 60

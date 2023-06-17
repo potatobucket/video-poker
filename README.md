@@ -12,6 +12,7 @@ Attribution for Kenney assets:
 
 Boardgame pack v2 by Kenney Vleugels (www.kenney.nl)
 Font package (free)
+Playing Cards Pack
 
 Created/distributed by Kenney (www.kenney.nl)
 

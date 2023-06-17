@@ -509,7 +509,7 @@ Font/colors/Color = Color(0, 0, 0, 1)
 Font/fonts/Font = ExtResource("4_fnkbi")
 
 [node name="card" type="Node2D"]
-position = Vector2(-240, -290)
+position = Vector2(-256, -320)
 script = ExtResource("1_5cw00")
 
 [node name="cardFacesAndBacks" type="AnimatedSprite2D" parent="."]
@@ -532,8 +532,9 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="holdButton" type="TextureButton" parent="."]
+offset_top = 2.0
 offset_right = 140.0
-offset_bottom = 190.0
+offset_bottom = 192.0
 metadata/_edit_use_anchors_ = true
 
 [connection signal="visibility_changed" from="holdLabel" to="." method="_on_hold_label_visibility_changed"]

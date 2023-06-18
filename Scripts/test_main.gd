@@ -5,6 +5,7 @@ extends Node2D
 @onready var drawButton = $drawButton
 @onready var cardShuffle = $cardShuffle
 @onready var cardDeal = $cardDeal
+@onready var winSong = $winSong
 @onready var cardThing = preload("res://Scenes/card.tscn")
 @onready var cardCopy = cardThing.instantiate()
 @onready var screenWidth = get_viewport_rect().size.y
@@ -60,7 +61,7 @@ func draw_hand():
 	elif deals == 1 and handFinished == false:
 		discard_unheld_cards()
 		refill_hand_with_new_cards()
-		newHand.sort_custom(sort_by_suit_and_then_value)
+#		newHand.sort_custom(sort_by_suit_and_then_value)
 		show_second_hand()
 		handFinished = true
 
@@ -123,6 +124,7 @@ func discard_unheld_cards():
 #-- too lazy to change this part
 func _on_debug_pressed():
 	draw_hand()
+#	newHand.sort_custom(sort_by_suit_and_then_value)
 
 #-- waits until the shuffle sound is over to display the initial hand of cards
 func _on_card_shuffle_finished():
@@ -131,7 +133,7 @@ func _on_card_shuffle_finished():
 #-- after the unheld cards are discarded this function refills the
 #-- player's hand with new cards back up to five
 func refill_hand_with_new_cards():
-	newHand.sort_custom(sort_by_suit_and_then_value)
+#	newHand.sort_custom(sort_by_suit_and_then_value)
 	if deals == 1 and handFinished == false:
 		for c in range(0, maxHandSize - newHand.size()):
 			newHand.append(deck.deck[0])
@@ -139,6 +141,9 @@ func refill_hand_with_new_cards():
 		handFinished = true
 		cardPos = cardPosReset.position
 
+#-- this seems to cause a bug where cards (usually K or Q) get duplicated
+#-- I may try and fix it but I don't think it's important enough to spend
+#-- time on right now
 func sort_by_suit_and_then_value(a, b):
 	if a.cardSuit == b.cardSuit:
 		if values[a.cardValue] < values[b.cardValue]:

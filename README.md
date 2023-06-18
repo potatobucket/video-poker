@@ -7,6 +7,15 @@ Card assets, sound effects and font by https://kenney.nl
 
 Background texture from https://polyhaven.com/
 
+Chiptune version of "The Gold Diggers' Song (We're in the Money)"
+	- music by Harry Warren / lyrics by Al Dubin
+	- created with Bosca Ceoil
+		- Bosca Ceoil created by Terry Cavanaugh
+			- https://terrycavanagh.itch.io/
+			- https://distractionware.com/
+			- https://terrysfreegameoftheweek.com/
+	- arranged by me
+
 
 ------------------------------
 ------------------------------

@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://qakemabyp61i"]
+
+[ext_resource type="Script" path="res://Scripts/ui_controller.gd" id="1_a54u1"]
+[ext_resource type="Theme" uid="uid://c7f6auvjqaq23" path="res://Themes/ui_theme.theme" id="2_b7bye"]
+[ext_resource type="Theme" uid="uid://copivsxgmkx16" path="res://Themes/bet_button_up_theme.theme" id="3_c78fs"]
+[ext_resource type="Theme" uid="uid://cevrqnkymvrye" path="res://Themes/bet_button_down_theme.theme" id="4_3ngqh"]
+
+[node name="UIController" type="Node2D"]
+script = ExtResource("1_a54u1")
+
+[node name="bgColor" type="ColorRect" parent="."]
+offset_right = 256.0
+offset_bottom = 128.0
+color = Color(0, 0, 0, 1)
+
+[node name="textContainer" type="VBoxContainer" parent="."]
+offset_right = 256.0
+offset_bottom = 128.0
+
+[node name="moneyCount" type="Label" parent="textContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_b7bye")
+text = "TEST TEST TEST"
+vertical_alignment = 1
+uppercase = true
+
+[node name="currentBet" type="Label" parent="textContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_b7bye")
+text = "TEST TEST TEST"
+vertical_alignment = 1
+uppercase = true
+
+[node name="betButtonsContainer" type="VBoxContainer" parent="."]
+offset_left = 320.0
+offset_right = 448.0
+offset_bottom = 136.0
+
+[node name="betUpButton" type="Button" parent="betButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_c78fs")
+text = "BET UP"
+
+[node name="betDownButton" type="Button" parent="betButtonsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_3ngqh")
+text = "BET DOWN"
+
+[connection signal="pressed" from="betButtonsContainer/betUpButton" to="." method="_on_bet_up_button_pressed"]
+[connection signal="pressed" from="betButtonsContainer/betDownButton" to="." method="_on_bet_down_button_pressed"]

@@ -44,6 +44,8 @@ var lastCard = 0
 var fiveHundredUnitsOffscreen
 
 #-- initializes the scene
+#-- "fiveHundredUnitsOffscreen" is part of a hacky way to clear the
+#-- screen after 2nd hand is drawn
 func _ready():
 	fiveHundredUnitsOffscreen = screenHeight + 500
 	drawLabel.set_text("Draw")

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dtdo5rklget22" path="res://Sprites/card_draw_button_texture.png" id="3_tr58h"]
 [ext_resource type="AudioStream" uid="uid://husgcfb764ay" path="res://Sounds/cardPlace1.ogg" id="3_xxjeg"]
 [ext_resource type="Texture2D" uid="uid://1srq2qawpi1f" path="res://Textures/fabric_pattern_07_col_1_4k.png" id="4_1r08f"]
-[ext_resource type="FontFile" uid="uid://crh7cit1uocvm" path="res://Fonts/Kenney Future.ttf" id="4_a8dcg"]
+[ext_resource type="Theme" uid="uid://c0mjlvtmj63bm" path="res://Themes/draw_button.theme" id="4_r6t2i"]
 [ext_resource type="AudioStream" uid="uid://c4iklcp5or7p1" path="res://Sounds/we're in the money (chiptune).wav" id="5_pxlvt"]
 
 [node name="testMain" type="Node2D"]
@@ -32,9 +32,7 @@ offset_left = 32.0
 offset_top = 96.0
 offset_right = 240.0
 offset_bottom = 144.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_a8dcg")
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("4_r6t2i")
 text = "Draw"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://7hmqrf7568f8"]
+[gd_scene load_steps=8 format=3 uid="uid://7hmqrf7568f8"]
 
 [ext_resource type="Script" path="res://Scripts/test_main.gd" id="1_5tkqv"]
 [ext_resource type="AudioStream" uid="uid://c5c5i5k8r6qy3" path="res://Sounds/cardFan1.ogg" id="2_eqqbr"]
+[ext_resource type="Texture2D" uid="uid://dtdo5rklget22" path="res://Sprites/card_draw_button_texture.png" id="3_tr58h"]
 [ext_resource type="AudioStream" uid="uid://husgcfb764ay" path="res://Sounds/cardPlace1.ogg" id="3_xxjeg"]
 [ext_resource type="Texture2D" uid="uid://1srq2qawpi1f" path="res://Textures/fabric_pattern_07_col_1_4k.png" id="4_1r08f"]
+[ext_resource type="FontFile" uid="uid://crh7cit1uocvm" path="res://Fonts/Kenney Future.ttf" id="4_a8dcg"]
 [ext_resource type="AudioStream" uid="uid://c4iklcp5or7p1" path="res://Sounds/we're in the money (chiptune).wav" id="5_pxlvt"]
 
 [node name="testMain" type="Node2D"]
@@ -16,12 +18,26 @@ offset_bottom = 728.0
 texture = ExtResource("4_1r08f")
 expand_mode = 2
 
-[node name="drawButton" type="Button" parent="."]
-offset_left = 912.0
-offset_top = 616.0
-offset_right = 1040.0
-offset_bottom = 680.0
+[node name="drawButton" type="TextureButton" parent="."]
+offset_left = 904.0
+offset_top = 568.0
+offset_right = 1175.0
+offset_bottom = 844.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("3_tr58h")
+
+[node name="drawOrDrawAgain" type="Label" parent="drawButton"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 96.0
+offset_right = 240.0
+offset_bottom = 144.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a8dcg")
+theme_override_font_sizes/font_size = 40
 text = "Draw"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="clearButton" type="Button" parent="."]
 visible = false
@@ -50,6 +66,7 @@ stream = ExtResource("3_xxjeg")
 stream = ExtResource("5_pxlvt")
 metadata/_edit_lock_ = true
 
+[connection signal="first_hand_drawn" from="." to="." method="_on_first_hand_drawn"]
 [connection signal="pressed" from="drawButton" to="." method="_on_debug_pressed"]
 [connection signal="pressed" from="clearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="finished" from="cardShuffle" to="." method="_on_card_shuffle_finished"]

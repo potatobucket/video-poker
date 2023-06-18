@@ -3,6 +3,7 @@ extends Node2D
 @onready var cardPos = $cardPos
 @onready var cardPosReset = $cardPosReset
 @onready var drawButton = $drawButton
+@onready var drawLabel = $drawButton/drawOrDrawAgain
 @onready var cardShuffle = $cardShuffle
 @onready var cardDeal = $cardDeal
 @onready var winSong = $winSong
@@ -17,6 +18,8 @@ enum phase {
 	draw_two,
 	game_finished
 }
+
+signal first_hand_drawn
 
 const carraigeReturn = 910
 const cardHeight = 95
@@ -43,7 +46,7 @@ var fiveHundredUnitsOffscreen
 #-- initializes the scene
 func _ready():
 	fiveHundredUnitsOffscreen = screenHeight + 500
-	drawButton.set_text("Draw")
+	drawLabel.set_text("Draw")
 	randomPitch = randf_range(0.5, 1.5)
 	cardShuffle.set_pitch_scale(randomPitch)
 
@@ -55,15 +58,18 @@ func _process(_delta):
 
 #-- handles if the draw is a new hand or the second hand
 func draw_hand():
-	if deals == 0 and handFinished == false:
+	if deals == 0 && handFinished == false:
 		draw_new_hand()
-		drawButton.set_text("Draw again")
-	elif deals == 1 and handFinished == false:
+	elif deals == 1 && handFinished == false:
 		discard_unheld_cards()
 		refill_hand_with_new_cards()
-#		newHand.sort_custom(sort_by_suit_and_then_value)
 		show_second_hand()
+		await get_tree().create_timer(2.5).timeout
+		drawLabel.set_text("New Hand?")
+#		newHand.sort_custom(sort_by_suit_and_then_value)
 		handFinished = true
+	elif deals == 2 && handFinished == true:
+		print("You drew a new hand!")
 
 #-- handles showing the initial new hand
 func show_hand():
@@ -98,9 +104,12 @@ func show_second_hand():
 		cardPosReset.position.x += get_viewport_rect().size.y / 5
 		cardCopy.emit_particles_that_match_the_suit_of_the_card(cardCopy.cardSuit)
 		await get_tree().create_timer(0.5).timeout
+	deals += 1
 
 #-- draws the first hand of cards
 func draw_new_hand():
+	drawButton.disabled = true
+	drawLabel.set_text("Wait...")
 	for c in range(0, maxHandSize):
 		newHand.append(deck.deck[0])
 		deck.deck.pop_front()
@@ -129,6 +138,8 @@ func _on_debug_pressed():
 #-- waits until the shuffle sound is over to display the initial hand of cards
 func _on_card_shuffle_finished():
 	show_hand()
+	await get_tree().create_timer(2.5).timeout
+	emit_signal("first_hand_drawn")
 
 #-- after the unheld cards are discarded this function refills the
 #-- player's hand with new cards back up to five
@@ -155,3 +166,8 @@ func sort_by_suit_and_then_value(a, b):
 #-- superstitiously held for superstitious reasons
 func _on_clear_button_pressed():
 	pass
+
+func _on_first_hand_drawn():
+	print("Signal emitted!")
+	drawButton.disabled = false
+	drawLabel.set_text("Draw\nAgain")

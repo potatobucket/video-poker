@@ -24,7 +24,7 @@ func _ready():
 #	generate_peasant_flush()
 #	generate_straight()
 #	generate_three_of_a_kind()
-	generate_two_pair()
+#	generate_two_pair()
 
 func generate_royal_flush():
 	debugHandRoyalFlush.append(deck.deck[0])

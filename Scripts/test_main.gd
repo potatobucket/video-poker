@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var player = PlayerData
 @onready var cardPos = $cardPos
 @onready var cardPosReset = $cardPosReset
 @onready var drawButton = $drawButton
@@ -9,11 +10,13 @@ extends Node2D
 @onready var winSong = $winSong
 @onready var cardThing = preload("res://Scenes/card.tscn")
 @onready var cardCopy = cardThing.instantiate()
+@onready var betUpButton = get_node("UIController/betButtonsContainer/betUpButton")
+@onready var betDownButton = get_node("UIController/betButtonsContainer/betDownButton")
+@onready var playerStats = get_node("UIController")
 @onready var screenWidth = get_viewport_rect().size.y
 @onready var screenHeight = get_viewport_rect().size.x
 
 enum phase {
-	start,
 	draw_one,
 	draw_two,
 	game_finished
@@ -58,23 +61,27 @@ func _ready():
 func _process(_delta):
 	randomPitch = randf_range(0.5, 1.5)
 
-#-- handles if the draw is a new hand or the second hand
+#-- handles game phases (first draw, second draw or finished hand)
+#-- is it good ettiquette to write match cases like this?
+#-- I feel like it's good for human readability
 func draw_hand():
-	if deals == 0 && handFinished == false:
-		draw_new_hand()
-	elif deals == 1 && handFinished == false:
-		discard_unheld_cards()
-		refill_hand_with_new_cards()
-		show_second_hand()
-		drawButton.disabled = true
-		drawLabel.set_text("Wait...")
-		await get_tree().create_timer(2.5).timeout
-		drawButton.disabled = false
-		drawLabel.set_text("New Hand?")
-#		newHand.sort_custom(sort_by_suit_and_then_value)
-		handFinished = true
-	elif deals == 2 && handFinished == true:
-		print("You drew a new hand!")
+	match (deals):
+		phase.draw_one:
+			set_money_on_ui()
+			draw_new_hand()
+		phase.draw_two:
+			discard_unheld_cards()
+			refill_hand_with_new_cards()
+			show_second_hand()
+			drawButton.disabled = true
+			drawLabel.set_text("Wait...")
+			await get_tree().create_timer(2.5).timeout
+			drawButton.disabled = false
+			drawLabel.set_text("New Hand?")
+#			newHand.sort_custom(sort_by_suit_and_then_value)
+			handFinished = true
+		phase.game_finished:
+			print("You drew a new hand!")
 
 #-- handles showing the initial new hand
 func show_hand():
@@ -113,6 +120,8 @@ func show_second_hand():
 
 #-- draws the first hand of cards
 func draw_new_hand():
+	betUpButton.disabled = true
+	betDownButton.disabled = true
 	drawButton.disabled = true
 	drawLabel.set_text("Wait...")
 	for c in range(0, maxHandSize):
@@ -167,6 +176,10 @@ func sort_by_suit_and_then_value(a, b):
 	elif values[a.cardValue] > values[b.cardValue]:
 		return true
 	return false
+
+func set_money_on_ui():
+	playerStats.playerMoney -= playerStats.currentBet
+	playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
 
 #-- superstitiously held for superstitious reasons
 func _on_clear_button_pressed():

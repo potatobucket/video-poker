@@ -21,7 +21,7 @@ offset_bottom = 128.0
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("2_b7bye")
-text = "TEST TEST TEST"
+text = " TEST TEST TEST"
 vertical_alignment = 1
 uppercase = true
 
@@ -29,7 +29,7 @@ uppercase = true
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("2_b7bye")
-text = "TEST TEST TEST"
+text = " TEST TEST TEST"
 vertical_alignment = 1
 uppercase = true
 

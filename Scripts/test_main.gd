@@ -66,7 +66,10 @@ func draw_hand():
 		discard_unheld_cards()
 		refill_hand_with_new_cards()
 		show_second_hand()
+		drawButton.disabled = true
+		drawLabel.set_text("Wait...")
 		await get_tree().create_timer(2.5).timeout
+		drawButton.disabled = false
 		drawLabel.set_text("New Hand?")
 #		newHand.sort_custom(sort_by_suit_and_then_value)
 		handFinished = true
@@ -170,6 +173,5 @@ func _on_clear_button_pressed():
 	pass
 
 func _on_first_hand_drawn():
-	print("Signal emitted!")
 	drawButton.disabled = false
 	drawLabel.set_text("Draw\nAgain")

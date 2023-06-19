@@ -13,16 +13,16 @@ class_name UI
 func _ready():
 	if playerMoney == null:
 		playerMoney = startingMoney
-	moneyLabel.set_text("Credit: %s" % playerMoney)
+	moneyLabel.set_text(" Credit: %s" % playerMoney)
 	currentBet = minBet
-	currentBetLabel.set_text("Current bet: %s" % currentBet)
+	currentBetLabel.set_text(" Current bet: %s" % currentBet)
 
 func _on_bet_up_button_pressed():
 	if currentBet < maxBet:
 		currentBet += 1
-		currentBetLabel.set_text("Current bet: %s" % currentBet)
+		currentBetLabel.set_text(" Current bet: %s" % currentBet)
 
 func _on_bet_down_button_pressed():
 	if currentBet > minBet:
 		currentBet -= 1
-		currentBetLabel.set_text("Current bet: %s" % currentBet)
+		currentBetLabel.set_text(" Current bet: %s" % currentBet)

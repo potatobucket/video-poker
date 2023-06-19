@@ -37,7 +37,7 @@ var indexOfCardPrinted = 0
 
 func _ready():
 	create_deck()
-	shuffle_deck()
+#	shuffle_deck()
 
 #-- creates a deck full of card objects
 func create_deck():

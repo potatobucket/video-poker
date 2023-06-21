@@ -5,6 +5,9 @@ extends Node2D
 
 @onready var card = Card
 @onready var deck = Deck
+@onready var cardThing = preload("res://Scenes/card.tscn")
+@onready var cardCopy = cardThing.instantiate()
+@onready var cardPos = $cardPos
 
 var debugHandRoyalFlush = []
 var debugHandStraightFlush = []
@@ -17,22 +20,16 @@ var debugHandTwoPair = []
 
 func _ready():
 	deck.create_deck()
-	generate_royal_flush()
-	generate_straight_flush()
-	generate_four_of_a_kind()
+#	generate_royal_flush()
+#	generate_straight_flush()
+#	generate_four_of_a_kind()
 	generate_full_house()
-	generate_peasant_flush()
-	generate_straight()
-	generate_three_of_a_kind()
-	generate_two_pair()
-	print(debugHandRoyalFlush)
-	print(debugHandStraightFlush)
-	print(debugHandFourOfAKind)
+#	generate_peasant_flush()
+#	generate_straight()
+#	generate_three_of_a_kind()
+#	generate_two_pair()
 	print(debugHandFullHouse)
-	print(debugHandPeasantFlush)
-	print(debugHandRegularStraight)
-	print(debugHandThreeOfAKind)
-	print(debugHandTwoPair)
+	debug_show_hand(debugHandFullHouse)
 	pass
 
 func generate_royal_flush():
@@ -85,8 +82,8 @@ func generate_peasant_flush():
 	debugHandPeasantFlush.append(deck.deck[8])
 	debugHandPeasantFlush.append(deck.deck[7])
 	debugHandPeasantFlush.append(deck.deck[11])
-#	debugHandPeasantFlush.sort_custom(debug_sort_by_suit_and_then_value)
-	debugHandPeasantFlush.sort_custom(debug_sort_by_value_and_then_suit)
+	debugHandPeasantFlush.sort_custom(debug_sort_by_suit_and_then_value)
+#	debugHandPeasantFlush.sort_custom(debug_sort_by_value_and_then_suit)
 #	for e in debugHandPeasantFlush.size():
 #		print(debugHandPeasantFlush[e])
 
@@ -138,3 +135,17 @@ func debug_sort_by_value_and_then_suit(a, b):
 	elif a[1] > b[1]:
 		return true
 	return false
+
+func debug_show_hand(handArray):
+	for handCard in handArray:
+		cardCopy = cardThing.instantiate()
+		add_child(cardCopy)
+		cardCopy.cardValue = deck.values[handCard[0]]
+		cardCopy.cardSuit = handCard[1]
+		cardCopy.held = false
+		cardCopy.position = cardPos.position
+		cardCopy.cardFaces.set_animation(handCard[1])
+		cardCopy.cardFaces.set_frame(deck.values[handCard[0]] - 1)
+		cardPos.position.x += get_viewport_rect().size.y / 5
+		cardCopy.emit_particles_that_match_the_suit_of_the_card(cardCopy.cardSuit)
+		await get_tree().create_timer(0.5).timeout

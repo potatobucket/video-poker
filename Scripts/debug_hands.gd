@@ -8,6 +8,8 @@ extends Node2D
 @onready var cardThing = preload("res://Scenes/card.tscn")
 @onready var cardCopy = cardThing.instantiate()
 @onready var cardPos = $cardPos
+@onready var handID = $handID
+@onready var winSong = $winSong
 
 var debugHandRoyalFlush = []
 var debugHandStraightFlush = []
@@ -20,17 +22,18 @@ var debugHandTwoPair = []
 
 func _ready():
 	deck.create_deck()
-#	generate_royal_flush()
+	generate_royal_flush()
+	debugHandRoyalFlush.shuffle()
 #	generate_straight_flush()
 #	generate_four_of_a_kind()
-	generate_full_house()
+#	generate_full_house()
 #	generate_peasant_flush()
 #	generate_straight()
 #	generate_three_of_a_kind()
 #	generate_two_pair()
-	print(debugHandFullHouse)
-	debug_show_hand(debugHandFullHouse)
-	pass
+#	print(debugHandRoyalFlush)
+	debug_show_hand(debugHandRoyalFlush)
+	debug_detect_royal_flush()
 
 func generate_royal_flush():
 	debugHandRoyalFlush.append(deck.deck[0])
@@ -149,3 +152,37 @@ func debug_show_hand(handArray):
 		cardPos.position.x += get_viewport_rect().size.y / 5
 		cardCopy.emit_particles_that_match_the_suit_of_the_card(cardCopy.cardSuit)
 		await get_tree().create_timer(0.5).timeout
+
+func debug_detect_royal_flush():
+	var validHand = ["ace", "ten", "jack", "queen", "king"]
+	var validValues = []
+	var validSuits
+	var hand = debugHandRoyalFlush
+	for k in hand:
+		if k.has("ace"):
+			validValues.append("ace")
+		elif k.has("ten"):
+			validValues.append("ten")
+		elif k.has("jack"):
+			validValues.append("jack")
+		elif k.has("queen"):
+			validValues.append("queen")
+		elif k.has("king"):
+			validValues.append("king")
+	if hand[0][1] == hand[1][1] && hand[0][1] == hand[2][1] && hand[0][1] == hand[3][1] && hand[0][1] == hand[4][1]:
+		validSuits = true
+	else:
+		validSuits = false
+	validValues.sort_custom(baby_sort)
+	if validValues == validHand && validSuits == true:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("*airhorns It's a ROYAL FLUSH!!! *airhorns")
+		winSong.play()
+	else:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("No royal flush for you today. Sorry.")
+
+func baby_sort(a, b):
+	if deck.values[a] < deck.values[b]:
+		return true
+	return false

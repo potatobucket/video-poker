@@ -22,9 +22,9 @@ var debugHandTwoPair = []
 
 func _ready():
 	deck.create_deck()
-	generate_royal_flush()
-	debugHandRoyalFlush.shuffle()
-#	generate_straight_flush()
+#	generate_royal_flush()
+	generate_straight_flush()
+	debugHandStraightFlush.shuffle()
 #	generate_four_of_a_kind()
 #	generate_full_house()
 #	generate_peasant_flush()
@@ -32,8 +32,10 @@ func _ready():
 #	generate_three_of_a_kind()
 #	generate_two_pair()
 #	print(debugHandRoyalFlush)
-	debug_show_hand(debugHandRoyalFlush)
+	debug_show_hand(debugHandStraightFlush)
 	debug_detect_royal_flush()
+	await get_tree().create_timer(2.5).timeout
+	debug_detect_straight_flush()
 
 func generate_royal_flush():
 	debugHandRoyalFlush.append(deck.deck[0])
@@ -47,11 +49,11 @@ func generate_royal_flush():
 #		print(debugHandRoyalFlush[a])
 
 func generate_straight_flush():
-	debugHandStraightFlush.append(deck.deck[15])
-	debugHandStraightFlush.append(deck.deck[16])
-	debugHandStraightFlush.append(deck.deck[17])
-	debugHandStraightFlush.append(deck.deck[18])
-	debugHandStraightFlush.append(deck.deck[19])
+	debugHandStraightFlush.append(deck.deck[28])
+	debugHandStraightFlush.append(deck.deck[29])
+	debugHandStraightFlush.append(deck.deck[30])
+	debugHandStraightFlush.append(deck.deck[31])
+	debugHandStraightFlush.append(deck.deck[32])
 #	debugHandStraightFlush.sort_custom(debug_sort_by_suit_and_then_value)
 	debugHandStraightFlush.sort_custom(debug_sort_by_value_and_then_suit)
 #	for b in debugHandStraightFlush.size():
@@ -157,7 +159,7 @@ func debug_detect_royal_flush():
 	var validHand = ["ace", "ten", "jack", "queen", "king"]
 	var validValues = []
 	var validSuits
-	var hand = debugHandRoyalFlush
+	var hand = debugHandStraightFlush
 	for k in hand:
 		if k.has("ace"):
 			validValues.append("ace")
@@ -176,11 +178,38 @@ func debug_detect_royal_flush():
 	validValues.sort_custom(baby_sort)
 	if validValues == validHand && validSuits == true:
 		await get_tree().create_timer(2.5).timeout
-		handID.set_text("*airhorns It's a ROYAL FLUSH!!! *airhorns")
+		handID.set_text("*airhorns* It's a ROYAL FLUSH!!! *airhorns*")
 		winSong.play()
 	else:
 		await get_tree().create_timer(2.5).timeout
 		handID.set_text("No royal flush for you today. Sorry.")
+
+func debug_detect_straight_flush():
+	var handValues = []
+	var validValues = 0
+	var validSuits
+	var hand = debugHandStraightFlush
+	for l in hand:
+		handValues.append(l[0])
+	if hand[0][1] == hand[1][1] && hand[0][1] == hand[2][1] && hand[0][1] == hand[3][1] && hand[0][1] == hand[4][1]:
+		validSuits = true
+	handValues.sort_custom(baby_sort)
+	if deck.values[handValues[0]] == deck.values[handValues[1]] - 1:
+		validValues += 2
+	if deck.values[handValues[1]] == deck.values[handValues[2]] - 1:
+		validValues += 1
+	if deck.values[handValues[2]] == deck.values[handValues[3]] - 1:
+		validValues += 1
+	if deck.values[handValues[3]] == deck.values[handValues[4]] - 1:
+		validValues += 1
+	if validValues == 5 && validSuits == true:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("It's a straight flush, baby!")
+		winSong.play()
+	else:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Dang! You missed out on a straight flush!")
+	print(validValues)
 
 func baby_sort(a, b):
 	if deck.values[a] < deck.values[b]:

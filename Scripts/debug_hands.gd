@@ -41,6 +41,8 @@ func _ready():
 #	debug_detect_full_house()
 #	await get_tree().create_timer(2.5).timeout
 	debug_detect_peasant_flush()
+	await get_tree().create_timer(2.5).timeout
+	debug_detect_regular_straight()
 
 func generate_royal_flush():
 	debugHandRoyalFlush.append(deck.deck[0])
@@ -213,7 +215,7 @@ func debug_detect_straight_flush():
 		winSong.play()
 	else:
 		await get_tree().create_timer(2.5).timeout
-		handID.set_text("Dang! You missed out on a straight flush!")
+		handID.set_text("Dang! Were you aiming for a straight flush?")
 
 func debug_detect_four_of_a_kind():
 	var handValues = []
@@ -247,6 +249,19 @@ func debug_detect_full_house():
 		handID.set_text("Aw, nuts. I guess you didn't get a full house this time...")
 
 func debug_detect_peasant_flush():
+	var handSuits = []
+	var hand = debugHandPeasantFlush
+	for o in hand:
+		handSuits.append(o[1])
+	if handSuits[0] == handSuits[1] && handSuits[0] == handSuits[2] && handSuits[0] == handSuits[3] && handSuits[0] == handSuits[4]:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Wowzers! You mean you got a flush?")
+		winSong.play()
+	else:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Not even a flush, huh?")
+
+func debug_detect_regular_straight():
 	pass
 
 func baby_sort(a, b):

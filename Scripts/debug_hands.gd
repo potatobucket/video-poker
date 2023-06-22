@@ -19,6 +19,7 @@ var debugHandPeasantFlush = []
 var debugHandRegularStraight = []
 var debugHandThreeOfAKind = []
 var debugHandTwoPair = []
+var debugHandJacksOrBetter = []
 
 func _ready():
 	deck.create_deck()
@@ -29,24 +30,27 @@ func _ready():
 #	generate_peasant_flush()
 #	generate_straight()
 #	generate_three_of_a_kind()
-	generate_two_pair()
+#	generate_two_pair()
+	generate_jacks_or_better()
 #	print(debugHandRoyalFlush)
-	debug_show_hand(debugHandTwoPair)
-#	debug_detect_royal_flush()
-#	await get_tree().create_timer(2.5).timeout
-#	debug_detect_straight_flush()
-#	await get_tree().create_timer(2.5).timeout
-#	debug_detect_four_of_a_kind()
-#	await get_tree().create_timer(2.5).timeout
-#	debug_detect_full_house()
-#	await get_tree().create_timer(2.5).timeout
-#	debug_detect_peasant_flush()
-#	await get_tree().create_timer(2.5).timeout
-#	debug_detect_regular_straight()
-#	await get_tree().create_timer(2.5).timeout
+	debug_show_hand(debugHandJacksOrBetter)
+	debug_detect_royal_flush()
+	await get_tree().create_timer(2.5).timeout
+	debug_detect_straight_flush()
+	await get_tree().create_timer(2.5).timeout
+	debug_detect_four_of_a_kind()
+	await get_tree().create_timer(2.5).timeout
+	debug_detect_full_house()
+	await get_tree().create_timer(2.5).timeout
+	debug_detect_peasant_flush()
+	await get_tree().create_timer(2.5).timeout
+	debug_detect_regular_straight()
+	await get_tree().create_timer(2.5).timeout
 	debug_detect_three_of_a_kind()
 	await get_tree().create_timer(2.5).timeout
 	debug_detect_two_pair()
+	await get_tree().create_timer(2.5).timeout
+	debug_detect_jacks_or_better()
 
 func generate_royal_flush():
 	debugHandRoyalFlush.append(deck.deck[0])
@@ -128,10 +132,21 @@ func generate_three_of_a_kind():
 func generate_two_pair():
 	debugHandTwoPair.append(deck.deck[3])
 	debugHandTwoPair.append(deck.deck[16])
-	debugHandTwoPair.append(deck.deck[34])
-	debugHandTwoPair.append(deck.deck[47])
 	debugHandTwoPair.append(deck.deck[5])
+	debugHandTwoPair.append(deck.deck[18])
+	debugHandTwoPair.append(deck.deck[8])
 #	debugHandTwoPair.sort_custom(debug_sort_by_suit_and_then_value)
+	debugHandTwoPair.sort_custom(debug_sort_by_value_and_then_suit)
+#	for h in debugHandTwoPair.size():
+#		print(debugHandTwoPair[h])
+
+func generate_jacks_or_better():
+	debugHandJacksOrBetter.append(deck.deck[0])
+	debugHandJacksOrBetter.append(deck.deck[13])
+	debugHandJacksOrBetter.append(deck.deck[5])
+	debugHandJacksOrBetter.append(deck.deck[28])
+	debugHandJacksOrBetter.append(deck.deck[37])
+#	debugHandJacksOrBetter.sort_custom(debug_sort_by_suit_and_then_value)
 	debugHandTwoPair.sort_custom(debug_sort_by_value_and_then_suit)
 #	for h in debugHandTwoPair.size():
 #		print(debugHandTwoPair[h])
@@ -170,7 +185,7 @@ func debug_detect_royal_flush():
 	var validHand = ["ace", "ten", "jack", "queen", "king"]
 	var validValues = []
 	var validSuits
-	var hand = debugHandTwoPair
+	var hand = debugHandJacksOrBetter
 	for k in hand:
 		if k.has("ace"):
 			validValues.append("ace")
@@ -199,7 +214,7 @@ func debug_detect_straight_flush():
 	var handValues = []
 	var validValues = 0
 	var validSuits
-	var hand = debugHandTwoPair
+	var hand = debugHandJacksOrBetter
 	for l in hand:
 		handValues.append(l[0])
 	if hand[0][1] == hand[1][1] && hand[0][1] == hand[2][1] && hand[0][1] == hand[3][1] && hand[0][1] == hand[4][1]:
@@ -223,7 +238,7 @@ func debug_detect_straight_flush():
 
 func debug_detect_four_of_a_kind():
 	var handValues = []
-	var hand = debugHandTwoPair
+	var hand = debugHandJacksOrBetter
 	for m in hand:
 		handValues.append(m[0])
 	handValues.sort_custom(baby_sort)
@@ -237,7 +252,7 @@ func debug_detect_four_of_a_kind():
 
 func debug_detect_full_house():
 	var handValues = []
-	var hand = debugHandTwoPair
+	var hand = debugHandJacksOrBetter
 	var maxValue = 0
 	var minValue = 0
 	for n in hand:
@@ -254,7 +269,7 @@ func debug_detect_full_house():
 
 func debug_detect_peasant_flush():
 	var handSuits = []
-	var hand = debugHandTwoPair
+	var hand = debugHandJacksOrBetter
 	for o in hand:
 		handSuits.append(o[1])
 	if handSuits[0] == handSuits[1] && handSuits[0] == handSuits[2] && handSuits[0] == handSuits[3] && handSuits[0] == handSuits[4]:
@@ -268,7 +283,7 @@ func debug_detect_peasant_flush():
 func debug_detect_regular_straight():
 	var handValues = []
 	var validValues = 0
-	var hand = debugHandTwoPair
+	var hand = debugHandJacksOrBetter
 	for p in hand:
 		handValues.append(p[0])
 	handValues.sort_custom(baby_sort)
@@ -290,7 +305,7 @@ func debug_detect_regular_straight():
 
 func debug_detect_three_of_a_kind():
 	var handValues = []
-	var hand = debugHandTwoPair
+	var hand = debugHandJacksOrBetter
 	for q in hand:
 		handValues.append(q[0])
 	handValues.sort_custom(baby_sort)
@@ -303,7 +318,39 @@ func debug_detect_three_of_a_kind():
 		handID.set_text("Not even... three of a kind...?")
 
 func debug_detect_two_pair():
-	pass
+	var handValues = []
+	var hand = debugHandJacksOrBetter
+	for q in hand:
+		handValues.append(q[0])
+	handValues.sort_custom(baby_sort)
+	if handValues.count(handValues[0]) == 2 && handValues.count(handValues[2]) == 2:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Two pair? In this economy?!")
+		winSong.play()
+	elif handValues.count(handValues[0]) == 2 && handValues.count(handValues[4]) == 2:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Two pair? In this economy?!")
+		winSong.play()
+	elif handValues.count(handValues[2]) == 2 && handValues.count(handValues[4]) == 2:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Two pair? In this economy?!")
+		winSong.play()
+	else:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Well, there's only one more winning hand it COULD be...")
+
+func debug_detect_jacks_or_better():
+	var handValues = []
+	var hand = debugHandJacksOrBetter
+	for r in hand:
+		handValues.append(r[0])
+	if handValues.count("jack") == 2 || handValues.count("queen") == 2 || handValues.count("king") == 2 || handValues.count("ace") == 2:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("That's a pair of jacks or better!!")
+		winSong.play()
+	else:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Well, that's all she wrote, mon capitan.")
 
 func baby_sort(a, b):
 	if deck.values[a] < deck.values[b]:

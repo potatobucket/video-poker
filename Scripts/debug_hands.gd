@@ -26,12 +26,12 @@ func _ready():
 #	generate_straight_flush()
 #	generate_four_of_a_kind()
 #	generate_full_house()
-	generate_peasant_flush()
+#	generate_peasant_flush()
 #	generate_straight()
-#	generate_three_of_a_kind()
+	generate_three_of_a_kind()
 #	generate_two_pair()
 #	print(debugHandRoyalFlush)
-	debug_show_hand(debugHandPeasantFlush)
+	debug_show_hand(debugHandThreeOfAKind)
 #	debug_detect_royal_flush()
 #	await get_tree().create_timer(2.5).timeout
 #	debug_detect_straight_flush()
@@ -40,9 +40,11 @@ func _ready():
 #	await get_tree().create_timer(2.5).timeout
 #	debug_detect_full_house()
 #	await get_tree().create_timer(2.5).timeout
-	debug_detect_peasant_flush()
+#	debug_detect_peasant_flush()
+#	await get_tree().create_timer(2.5).timeout
+#	debug_detect_regular_straight()
 	await get_tree().create_timer(2.5).timeout
-	debug_detect_regular_straight()
+	debug_detect_three_of_a_kind()
 
 func generate_royal_flush():
 	debugHandRoyalFlush.append(deck.deck[0])
@@ -166,7 +168,7 @@ func debug_detect_royal_flush():
 	var validHand = ["ace", "ten", "jack", "queen", "king"]
 	var validValues = []
 	var validSuits
-	var hand = debugHandPeasantFlush
+	var hand = debugHandThreeOfAKind
 	for k in hand:
 		if k.has("ace"):
 			validValues.append("ace")
@@ -195,7 +197,7 @@ func debug_detect_straight_flush():
 	var handValues = []
 	var validValues = 0
 	var validSuits
-	var hand = debugHandPeasantFlush
+	var hand = debugHandThreeOfAKind
 	for l in hand:
 		handValues.append(l[0])
 	if hand[0][1] == hand[1][1] && hand[0][1] == hand[2][1] && hand[0][1] == hand[3][1] && hand[0][1] == hand[4][1]:
@@ -219,7 +221,7 @@ func debug_detect_straight_flush():
 
 func debug_detect_four_of_a_kind():
 	var handValues = []
-	var hand = debugHandPeasantFlush
+	var hand = debugHandThreeOfAKind
 	for m in hand:
 		handValues.append(m[0])
 	handValues.sort_custom(baby_sort)
@@ -233,7 +235,7 @@ func debug_detect_four_of_a_kind():
 
 func debug_detect_full_house():
 	var handValues = []
-	var hand = debugHandPeasantFlush
+	var hand = debugHandThreeOfAKind
 	var maxValue = 0
 	var minValue = 0
 	for n in hand:
@@ -250,7 +252,7 @@ func debug_detect_full_house():
 
 func debug_detect_peasant_flush():
 	var handSuits = []
-	var hand = debugHandPeasantFlush
+	var hand = debugHandThreeOfAKind
 	for o in hand:
 		handSuits.append(o[1])
 	if handSuits[0] == handSuits[1] && handSuits[0] == handSuits[2] && handSuits[0] == handSuits[3] && handSuits[0] == handSuits[4]:
@@ -262,6 +264,29 @@ func debug_detect_peasant_flush():
 		handID.set_text("Not even a flush, huh?")
 
 func debug_detect_regular_straight():
+	var handValues = []
+	var validValues = 0
+	var hand = debugHandThreeOfAKind
+	for p in hand:
+		handValues.append(p[0])
+	handValues.sort_custom(baby_sort)
+	if deck.values[handValues[0]] == deck.values[handValues[1]] - 1:
+		validValues += 2
+	if deck.values[handValues[1]] == deck.values[handValues[2]] - 1:
+		validValues += 1
+	if deck.values[handValues[2]] == deck.values[handValues[3]] - 1:
+		validValues += 1
+	if deck.values[handValues[3]] == deck.values[handValues[4]] - 1:
+		validValues += 1
+	if validValues == 5:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Hoo, man, that's a straight, alrighty!")
+		winSong.play()
+	else:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Aw, I thought it was gonna be a straight. :(")
+
+func debug_detect_three_of_a_kind():
 	pass
 
 func baby_sort(a, b):

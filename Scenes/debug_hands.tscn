@@ -1,6 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://baybutmx0jeha"]
+[gd_scene load_steps=3 format=3 uid="uid://baybutmx0jeha"]
 
 [ext_resource type="Script" path="res://Scripts/debug_hands.gd" id="1_l183p"]
+[ext_resource type="AudioStream" uid="uid://c4iklcp5or7p1" path="res://Sounds/we're in the money (chiptune).wav" id="2_k8k0g"]
 
 [node name="debug_hands" type="Node2D"]
 script = ExtResource("1_l183p")
+
+[node name="cardPos" type="Marker2D" parent="."]
+position = Vector2(64, 64)
+
+[node name="handID" type="Label" parent="."]
+offset_left = 64.0
+offset_top = 254.0
+offset_right = 832.0
+offset_bottom = 318.0
+text = "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST"
+vertical_alignment = 1
+
+[node name="winSong" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_k8k0g")
+metadata/_edit_lock_ = true

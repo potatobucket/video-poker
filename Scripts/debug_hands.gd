@@ -25,18 +25,22 @@ func _ready():
 #	generate_royal_flush()
 #	generate_straight_flush()
 #	generate_four_of_a_kind()
-	generate_full_house()
-#	generate_peasant_flush()
+#	generate_full_house()
+	generate_peasant_flush()
 #	generate_straight()
 #	generate_three_of_a_kind()
 #	generate_two_pair()
 #	print(debugHandRoyalFlush)
-	debug_show_hand(debugHandFullHouse)
-	debug_detect_royal_flush()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_straight_flush()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_four_of_a_kind()
+	debug_show_hand(debugHandPeasantFlush)
+#	debug_detect_royal_flush()
+#	await get_tree().create_timer(2.5).timeout
+#	debug_detect_straight_flush()
+#	await get_tree().create_timer(2.5).timeout
+#	debug_detect_four_of_a_kind()
+#	await get_tree().create_timer(2.5).timeout
+#	debug_detect_full_house()
+#	await get_tree().create_timer(2.5).timeout
+	debug_detect_peasant_flush()
 
 func generate_royal_flush():
 	debugHandRoyalFlush.append(deck.deck[0])
@@ -74,7 +78,7 @@ func generate_four_of_a_kind():
 func generate_full_house():
 	debugHandFullHouse.append(deck.deck[0])
 	debugHandFullHouse.append(deck.deck[13])
-	debugHandFullHouse.append(deck.deck[26])
+	debugHandFullHouse.append(deck.deck[38])
 	debugHandFullHouse.append(deck.deck[12])
 	debugHandFullHouse.append(deck.deck[25])
 #	debugHandFullHouse.sort_custom(debug_sort_by_suit_and_then_value)
@@ -160,7 +164,7 @@ func debug_detect_royal_flush():
 	var validHand = ["ace", "ten", "jack", "queen", "king"]
 	var validValues = []
 	var validSuits
-	var hand = debugHandFullHouse
+	var hand = debugHandPeasantFlush
 	for k in hand:
 		if k.has("ace"):
 			validValues.append("ace")
@@ -189,7 +193,7 @@ func debug_detect_straight_flush():
 	var handValues = []
 	var validValues = 0
 	var validSuits
-	var hand = debugHandFullHouse
+	var hand = debugHandPeasantFlush
 	for l in hand:
 		handValues.append(l[0])
 	if hand[0][1] == hand[1][1] && hand[0][1] == hand[2][1] && hand[0][1] == hand[3][1] && hand[0][1] == hand[4][1]:
@@ -213,7 +217,7 @@ func debug_detect_straight_flush():
 
 func debug_detect_four_of_a_kind():
 	var handValues = []
-	var hand = debugHandFullHouse
+	var hand = debugHandPeasantFlush
 	for m in hand:
 		handValues.append(m[0])
 	handValues.sort_custom(baby_sort)
@@ -224,6 +228,26 @@ func debug_detect_four_of_a_kind():
 	else:
 		await get_tree().create_timer(2.5).timeout
 		handID.set_text("You missed out on four of a kind, my guy!")
+
+func debug_detect_full_house():
+	var handValues = []
+	var hand = debugHandPeasantFlush
+	var maxValue = 0
+	var minValue = 0
+	for n in hand:
+		handValues.append(n[0])
+	maxValue = handValues.max()
+	minValue = handValues.min()
+	if handValues.count(maxValue) == 3 && handValues.count(minValue) == 2 || handValues.count(maxValue) == 2 && handValues.count(minValue) == 3:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Jeepers, mister! A full house!")
+		winSong.play()
+	else:
+		await get_tree().create_timer(2.5).timeout
+		handID.set_text("Aw, nuts. I guess you didn't get a full house this time...")
+
+func debug_detect_peasant_flush():
+	pass
 
 func baby_sort(a, b):
 	if deck.values[a] < deck.values[b]:

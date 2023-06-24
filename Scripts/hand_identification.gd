@@ -5,7 +5,6 @@ class_name HandDetection
 #-- is a valid winning hand or not
 
 @onready var deck = Deck
-#@onready var main = preload("res://Scripts/test_main.gd")
 
 func baby_sort(a, b):
 	if deck.values[a] < deck.values[b]:
@@ -124,3 +123,14 @@ func detect_jacks_or_better(hand):
 		handValues.append(r.cardValue)
 	if handValues.count("jack") == 2 || handValues.count("queen") == 2 || handValues.count("king") == 2 || handValues.count("ace") == 2:
 		return true
+
+func detect_all_hands(playerHand):
+	detect_royal_flush(playerHand)
+	detect_straight_flush(playerHand)
+	detect_four_of_a_kind(playerHand)
+	detect_full_house(playerHand)
+	detect_peasant_flush(playerHand)
+	detect_regular_straight(playerHand)
+	detect_three_of_a_kind(playerHand)
+	detect_two_pair(playerHand)
+	detect_jacks_or_better(playerHand)

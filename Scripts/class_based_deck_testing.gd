@@ -36,8 +36,7 @@ var shufflesExpected = 7
 var indexOfCardPrinted = 0
 
 func _ready():
-	create_deck()
-#	shuffle_deck()
+	set_up_deck()
 
 #-- creates a deck full of card objects
 func create_deck():
@@ -53,6 +52,11 @@ func create_deck():
 func shuffle_deck():
 	for expected in shufflesExpected:
 		deck.shuffle()
+
+func set_up_deck():
+	deck.clear()
+	create_deck()
+	shuffle_deck()
 
 #-- I think I moved this to the main scene but see other
 #-- comments about superstition and why I won't delete it

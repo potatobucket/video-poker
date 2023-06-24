@@ -5,6 +5,7 @@ extends Node2D
 @onready var cardPosReset = $cardPosReset
 @onready var drawButton = $drawButton
 @onready var drawLabel = $drawButton/drawOrDrawAgain
+@onready var winLoseLabel = $Container/winLoseLabel
 @onready var cardShuffle = $cardShuffle
 @onready var cardDeal = $cardDeal
 @onready var winSong = $winSong
@@ -48,6 +49,18 @@ var firstCard = -5
 var lastCard = 0
 var fiveHundredUnitsOffscreen
 
+var winningHandType = {
+	"royal_flush" = "royal flush",
+	"straight_flush" = "straight flush",
+	"four_of_a_kind" = "four-of-a-kind",
+	"full_house" = "full house",
+	"flush" = "flush",
+	"straight" = "straight",
+	"three_of_a_kind" = "three-of-a-kind",
+	"two_pair" = "two pair",
+	"jacks_or_better" = "at least a pair of jacks"
+}
+
 #-- initializes the scene
 #-- "fiveHundredUnitsOffscreen" is part of a hacky way to clear the
 #-- screen after 2nd hand is drawn
@@ -82,15 +95,15 @@ func draw_hand():
 			drawButton.disabled = false
 			drawLabel.set_text("New Hand?")
 			detectHand.detect_all_hands(newHand)
-			for bleh in newHand:
-				print(bleh.cardName)
-#			if !detectHand.detect_all_hands(newHand):
-#				loseSong.play()
-#			else:
-#				winSong.play()
 #			newHand.sort_custom(sort_by_suit_and_then_value)
 			handFinished = true
 		phase.game_finished:
+			winLoseLabel.hide()
+			for woosh in range(firstCard, lastCard):
+				get_child(woosh).queue_free()
+			deals = 0
+			deck.set_up_deck()
+			drawLabel.set_text("Draw")
 			print("You drew a new hand!")
 
 #-- handles showing the initial new hand
@@ -193,13 +206,71 @@ func set_money_on_ui():
 	playerStats.playerMoney -= playerStats.currentBet
 	playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
 
-#-- superstitiously held for superstitious reasons
-func _on_clear_button_pressed():
-	pass
-
 func _on_first_hand_drawn():
 	drawButton.disabled = false
 	drawLabel.set_text("Draw\nAgain")
 
-func _on_winning_hand():
-	winSong.play()
+func _on_winning_hand(typeOfHand, payout):
+	if typeOfHand == "royal_flush":
+		playerStats.playerMoney += playerStats.currentBet * payout
+		winSong.play()
+		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
+		winLoseLabel.show()
+		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		return true
+	if typeOfHand == "straight_flush":
+		playerStats.playerMoney += playerStats.currentBet * payout
+		winSong.play()
+		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
+		winLoseLabel.show()
+		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		return true
+	if typeOfHand == "four_of_a_kind":
+		playerStats.playerMoney += playerStats.currentBet * payout
+		winSong.play()
+		winLoseLabel.set_text("You got %s!" % winningHandType[typeOfHand])
+		winLoseLabel.show()
+		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		return true
+	if typeOfHand == "full_house":
+		playerStats.playerMoney += playerStats.currentBet * payout
+		winSong.play()
+		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
+		winLoseLabel.show()
+		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		return true
+	if typeOfHand == "flush":
+		playerStats.playerMoney += playerStats.currentBet * payout
+		winSong.play()
+		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
+		winLoseLabel.show()
+		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		return true
+	if typeOfHand == "straight":
+		playerStats.playerMoney += playerStats.currentBet * payout
+		winSong.play()
+		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
+		winLoseLabel.show()
+		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		return true
+	if typeOfHand == "three_of_a_kind":
+		playerStats.playerMoney += playerStats.currentBet * payout
+		winSong.play()
+		winLoseLabel.set_text("You got %s!" % winningHandType[typeOfHand])
+		winLoseLabel.show()
+		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		return true
+	if typeOfHand == "two_pair":
+		playerStats.playerMoney += playerStats.currentBet * payout
+		winSong.play()
+		winLoseLabel.set_text("You got %s!" % winningHandType[typeOfHand])
+		winLoseLabel.show()
+		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		return true
+	if typeOfHand == "jacks_or_better":
+		playerStats.playerMoney += playerStats.currentBet * payout
+		winSong.play()
+		winLoseLabel.set_text("You got %s!" % winningHandType[typeOfHand])
+		winLoseLabel.show()
+		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		return true

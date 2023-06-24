@@ -8,8 +8,10 @@ extends Node2D
 @onready var cardShuffle = $cardShuffle
 @onready var cardDeal = $cardDeal
 @onready var winSong = $winSong
+@onready var loseSong = $loseSong
 @onready var cardThing = preload("res://Scenes/card.tscn")
 @onready var cardCopy = cardThing.instantiate()
+@onready var detectHand = DetectHands
 @onready var betUpButton = get_node("UIController/betButtonsContainer/betUpButton")
 @onready var betDownButton = get_node("UIController/betButtonsContainer/betDownButton")
 @onready var playerStats = get_node("UIController")
@@ -50,12 +52,11 @@ var fiveHundredUnitsOffscreen
 #-- "fiveHundredUnitsOffscreen" is part of a hacky way to clear the
 #-- screen after 2nd hand is drawn
 func _ready():
+	Signals.connect("winning_hand", Callable(self, "_on_winning_hand"))
 	fiveHundredUnitsOffscreen = screenHeight + 500
 	drawLabel.set_text("Draw")
 	randomPitch = randf_range(0.5, 1.5)
 	cardShuffle.set_pitch_scale(randomPitch)
-	for item in deck.deck:
-		print(item.cardValue, " of ", item.cardSuit)
 
 #-- sets the random pitch for when the cards are dealt
 #-- also keeps track of if the "draw" button signifies
@@ -80,6 +81,13 @@ func draw_hand():
 			await get_tree().create_timer(2.5).timeout
 			drawButton.disabled = false
 			drawLabel.set_text("New Hand?")
+			detectHand.detect_all_hands(newHand)
+			for bleh in newHand:
+				print(bleh.cardName)
+#			if !detectHand.detect_all_hands(newHand):
+#				loseSong.play()
+#			else:
+#				winSong.play()
 #			newHand.sort_custom(sort_by_suit_and_then_value)
 			handFinished = true
 		phase.game_finished:
@@ -192,3 +200,6 @@ func _on_clear_button_pressed():
 func _on_first_hand_drawn():
 	drawButton.disabled = false
 	drawLabel.set_text("Draw\nAgain")
+
+func _on_winning_hand():
+	winSong.play()

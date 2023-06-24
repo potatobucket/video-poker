@@ -23,6 +23,7 @@ TestDeck="*res://Scripts/class_based_deck_testing.gd"
 classTest="*res://Scripts/testingClasses.gd"
 PlayerData="*res://Scripts/player_data.gd"
 DetectHands="*res://Scripts/hand_identification.gd"
+Signals="*res://Scripts/signals.gd"
 
 [display]
 

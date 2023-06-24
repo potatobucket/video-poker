@@ -5,6 +5,7 @@ class_name HandDetection
 #-- is a valid winning hand or not
 
 @onready var deck = Deck
+@onready var signals = Signals
 
 func baby_sort(a, b):
 	if deck.values[a] < deck.values[b]:
@@ -52,6 +53,7 @@ func detect_straight_flush(hand):
 	if deck.values[handValues[3]] == deck.values[handValues[4]] - 1:
 		validValues += 1
 	if validValues == 5 && validSuits == true:
+		signals.emit_signal("winning_hand")
 		return true
 
 func detect_four_of_a_kind(hand):

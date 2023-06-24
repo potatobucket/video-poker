@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://7hmqrf7568f8"]
+[gd_scene load_steps=10 format=3 uid="uid://7hmqrf7568f8"]
 
 [ext_resource type="Script" path="res://Scripts/test_main.gd" id="1_5tkqv"]
 [ext_resource type="AudioStream" uid="uid://c5c5i5k8r6qy3" path="res://Sounds/cardFan1.ogg" id="2_eqqbr"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://1srq2qawpi1f" path="res://Textures/fabric_pattern_07_col_1_4k.png" id="4_1r08f"]
 [ext_resource type="Theme" uid="uid://c0mjlvtmj63bm" path="res://Themes/draw_button.theme" id="4_r6t2i"]
 [ext_resource type="AudioStream" uid="uid://c4iklcp5or7p1" path="res://Sounds/we're in the money (chiptune).wav" id="5_pxlvt"]
+[ext_resource type="AudioStream" uid="uid://uwtx7be4up6i" path="res://Sounds/losing.wav" id="8_eqw23"]
 [ext_resource type="PackedScene" uid="uid://qakemabyp61i" path="res://Scenes/ui_controller.tscn" id="8_i1ylw"]
 
 [node name="testMain" type="Node2D"]
@@ -63,6 +64,10 @@ stream = ExtResource("3_xxjeg")
 
 [node name="winSong" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_pxlvt")
+metadata/_edit_lock_ = true
+
+[node name="loseSong" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_eqw23")
 metadata/_edit_lock_ = true
 
 [node name="UIController" parent="." instance=ExtResource("8_i1ylw")]

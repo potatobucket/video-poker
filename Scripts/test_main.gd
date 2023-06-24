@@ -54,6 +54,8 @@ func _ready():
 	drawLabel.set_text("Draw")
 	randomPitch = randf_range(0.5, 1.5)
 	cardShuffle.set_pitch_scale(randomPitch)
+	for item in deck.deck:
+		print(item.cardValue, " of ", item.cardSuit)
 
 #-- sets the random pitch for when the cards are dealt
 #-- also keeps track of if the "draw" button signifies
@@ -93,6 +95,7 @@ func show_hand():
 		cardCopy.held = false
 		cardDeal.set_pitch_scale(randomPitch)
 		cardDeal.play()
+		cardCopy.holdButton.disabled = false
 		cardCopy.position = cardPos.position
 		cardCopy.cardFaces.set_animation(handCard.cardSuit)
 		cardCopy.cardFaces.set_frame(values[handCard.cardValue] - 1)
@@ -110,6 +113,7 @@ func show_second_hand():
 		cardCopy.cardSuit = handCard.cardSuit
 		cardDeal.set_pitch_scale(randomPitch)
 		cardDeal.play()
+		cardCopy.holdButton.disabled = true
 		cardCopy.position = cardPosReset.position
 		cardCopy.cardFaces.set_animation(handCard.cardSuit)
 		cardCopy.cardFaces.set_frame(values[handCard.cardValue] - 1)

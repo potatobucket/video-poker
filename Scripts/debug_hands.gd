@@ -1,4 +1,5 @@
 extends Node2D
+class_name DebugMenu
 
 #-- this script lets me me generate rarer hands (like royal flush or straight
 #-- flush or what have you) instead of having to rely on random chance
@@ -7,9 +8,11 @@ extends Node2D
 @onready var deck = Deck
 @onready var cardThing = preload("res://Scenes/card.tscn")
 @onready var cardCopy = cardThing.instantiate()
+@onready var handDetection = DetectHands
 @onready var cardPos = $cardPos
 @onready var handID = $handID
 @onready var winSong = $winSong
+@onready var loseSong = $loseSong
 
 var debugHandRoyalFlush = []
 var debugHandStraightFlush = []
@@ -31,107 +34,281 @@ func _ready():
 #	generate_straight()
 #	generate_three_of_a_kind()
 #	generate_two_pair()
-	generate_jacks_or_better()
-#	print(debugHandRoyalFlush)
-	debug_show_hand(debugHandJacksOrBetter)
-	debug_detect_royal_flush()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_straight_flush()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_four_of_a_kind()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_full_house()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_peasant_flush()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_regular_straight()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_three_of_a_kind()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_two_pair()
-	await get_tree().create_timer(2.5).timeout
-	debug_detect_jacks_or_better()
+#	generate_jacks_or_better()
+	generate_losing_hand()
+	debug_detect_all_hands()
+	if !debug_detect_all_hands():
+		debug_detect_losing_hand()
 
 func generate_royal_flush():
-	debugHandRoyalFlush.append(deck.deck[0])
-	debugHandRoyalFlush.append(deck.deck[9])
-	debugHandRoyalFlush.append(deck.deck[10])
-	debugHandRoyalFlush.append(deck.deck[11])
-	debugHandRoyalFlush.append(deck.deck[12])
-#	debugHandRoyalFlush.sort_custom(debug_sort_by_suit_and_then_value)
-	debugHandRoyalFlush.sort_custom(debug_sort_by_value_and_then_suit)
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRoyalFlush.append(cardCopy)
+	cardCopy.cardValue = "ace"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRoyalFlush.append(cardCopy)
+	cardCopy.cardValue = "ten"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRoyalFlush.append(cardCopy)
+	cardCopy.cardValue = "jack"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRoyalFlush.append(cardCopy)
+	cardCopy.cardValue = "queen"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRoyalFlush.append(cardCopy)
+	cardCopy.cardValue = "king"
+	cardCopy.cardSuit = deck.suits[0]
 
 func generate_straight_flush():
-	debugHandStraightFlush.append(deck.deck[28])
-	debugHandStraightFlush.append(deck.deck[29])
-	debugHandStraightFlush.append(deck.deck[30])
-	debugHandStraightFlush.append(deck.deck[31])
-	debugHandStraightFlush.append(deck.deck[32])
-#	debugHandStraightFlush.sort_custom(debug_sort_by_suit_and_then_value)
-	debugHandStraightFlush.sort_custom(debug_sort_by_value_and_then_suit)
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandStraightFlush.append(cardCopy)
+	cardCopy.cardValue = "four"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandStraightFlush.append(cardCopy)
+	cardCopy.cardValue = "five"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandStraightFlush.append(cardCopy)
+	cardCopy.cardValue = "six"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandStraightFlush.append(cardCopy)
+	cardCopy.cardValue = "seven"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandStraightFlush.append(cardCopy)
+	cardCopy.cardValue = "eight"
+	cardCopy.cardSuit = deck.suits[1]
 
 func generate_four_of_a_kind():
-	debugHandFourOfAKind.append(deck.deck[7])
-	debugHandFourOfAKind.append(deck.deck[20])
-	debugHandFourOfAKind.append(deck.deck[33])
-	debugHandFourOfAKind.append(deck.deck[46])
-	debugHandFourOfAKind.append(deck.deck[39])
-	debugHandFourOfAKind.sort_custom(debug_sort_by_suit_and_then_value)
-#	debugHandFourOfAKind.sort_custom(debug_sort_by_value_and_then_suit)
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFourOfAKind.append(cardCopy)
+	cardCopy.cardValue = "eight"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFourOfAKind.append(cardCopy)
+	cardCopy.cardValue = "five"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFourOfAKind.append(cardCopy)
+	cardCopy.cardValue = "five"
+	cardCopy.cardSuit = deck.suits[2]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFourOfAKind.append(cardCopy)
+	cardCopy.cardValue = "five"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFourOfAKind.append(cardCopy)
+	cardCopy.cardValue = "five"
+	cardCopy.cardSuit = deck.suits[0]
 
 func generate_full_house():
-	debugHandFullHouse.append(deck.deck[0])
-	debugHandFullHouse.append(deck.deck[13])
-	debugHandFullHouse.append(deck.deck[38])
-	debugHandFullHouse.append(deck.deck[12])
-	debugHandFullHouse.append(deck.deck[25])
-#	debugHandFullHouse.sort_custom(debug_sort_by_suit_and_then_value)
-	debugHandFullHouse.sort_custom(debug_sort_by_value_and_then_suit)
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFullHouse.append(cardCopy)
+	cardCopy.cardValue = "king"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFullHouse.append(cardCopy)
+	cardCopy.cardValue = "king"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFullHouse.append(cardCopy)
+	cardCopy.cardValue = "king"
+	cardCopy.cardSuit = deck.suits[2]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFullHouse.append(cardCopy)
+	cardCopy.cardValue = "five"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandFullHouse.append(cardCopy)
+	cardCopy.cardValue = "five"
+	cardCopy.cardSuit = deck.suits[1]
 
 func generate_peasant_flush():
-	debugHandPeasantFlush.append(deck.deck[9])
-	debugHandPeasantFlush.append(deck.deck[4])
-	debugHandPeasantFlush.append(deck.deck[8])
-	debugHandPeasantFlush.append(deck.deck[7])
-	debugHandPeasantFlush.append(deck.deck[11])
-	debugHandPeasantFlush.sort_custom(debug_sort_by_suit_and_then_value)
-#	debugHandPeasantFlush.sort_custom(debug_sort_by_value_and_then_suit)
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandPeasantFlush.append(cardCopy)
+	cardCopy.cardValue = "eight"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandPeasantFlush.append(cardCopy)
+	cardCopy.cardValue = "ace"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandPeasantFlush.append(cardCopy)
+	cardCopy.cardValue = "nine"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandPeasantFlush.append(cardCopy)
+	cardCopy.cardValue = "seven"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandPeasantFlush.append(cardCopy)
+	cardCopy.cardValue = "king"
+	cardCopy.cardSuit = deck.suits[3]
 
 func generate_straight():
-	debugHandRegularStraight.append(deck.deck[1])
-	debugHandRegularStraight.append(deck.deck[15])
-	debugHandRegularStraight.append(deck.deck[29])
-	debugHandRegularStraight.append(deck.deck[43])
-	debugHandRegularStraight.append(deck.deck[44])
-#	debugHandRegularStraight.sort_custom(debug_sort_by_suit_and_then_value)
-	debugHandRegularStraight.sort_custom(debug_sort_by_value_and_then_suit)
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRegularStraight.append(cardCopy)
+	cardCopy.cardValue = "four"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRegularStraight.append(cardCopy)
+	cardCopy.cardValue = "five"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRegularStraight.append(cardCopy)
+	cardCopy.cardValue = "six"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRegularStraight.append(cardCopy)
+	cardCopy.cardValue = "seven"
+	cardCopy.cardSuit = deck.suits[2]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandRegularStraight.append(cardCopy)
+	cardCopy.cardValue = "eight"
+	cardCopy.cardSuit = deck.suits[3]
 
 func generate_three_of_a_kind():
-	debugHandThreeOfAKind.append(deck.deck[0])
-	debugHandThreeOfAKind.append(deck.deck[13])
-	debugHandThreeOfAKind.append(deck.deck[26])
-	debugHandThreeOfAKind.append(deck.deck[43])
-	debugHandThreeOfAKind.append(deck.deck[44])
-#	debugHandThreeOfAKind.sort_custom(debug_sort_by_suit_and_then_value)
-	debugHandThreeOfAKind.sort_custom(debug_sort_by_value_and_then_suit)
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandThreeOfAKind.append(cardCopy)
+	cardCopy.cardValue = "three"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandThreeOfAKind.append(cardCopy)
+	cardCopy.cardValue = "three"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandThreeOfAKind.append(cardCopy)
+	cardCopy.cardValue = "three"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandThreeOfAKind.append(cardCopy)
+	cardCopy.cardValue = "seven"
+	cardCopy.cardSuit = deck.suits[2]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandThreeOfAKind.append(cardCopy)
+	cardCopy.cardValue = "eight"
+	cardCopy.cardSuit = deck.suits[3]
 
 func generate_two_pair():
-	debugHandTwoPair.append(deck.deck[3])
-	debugHandTwoPair.append(deck.deck[16])
-	debugHandTwoPair.append(deck.deck[5])
-	debugHandTwoPair.append(deck.deck[18])
-	debugHandTwoPair.append(deck.deck[8])
-#	debugHandTwoPair.sort_custom(debug_sort_by_suit_and_then_value)
-	debugHandTwoPair.sort_custom(debug_sort_by_value_and_then_suit)
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandTwoPair.append(cardCopy)
+	cardCopy.cardValue = "three"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandTwoPair.append(cardCopy)
+	cardCopy.cardValue = "three"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandTwoPair.append(cardCopy)
+	cardCopy.cardValue = "eight"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandTwoPair.append(cardCopy)
+	cardCopy.cardValue = "eight"
+	cardCopy.cardSuit = deck.suits[2]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandTwoPair.append(cardCopy)
+	cardCopy.cardValue = "two"
+	cardCopy.cardSuit = deck.suits[3]
 
 func generate_jacks_or_better():
-	debugHandJacksOrBetter.append(deck.deck[0])
-	debugHandJacksOrBetter.append(deck.deck[13])
-	debugHandJacksOrBetter.append(deck.deck[5])
-	debugHandJacksOrBetter.append(deck.deck[28])
-	debugHandJacksOrBetter.append(deck.deck[37])
-#	debugHandJacksOrBetter.sort_custom(debug_sort_by_suit_and_then_value)
-	debugHandTwoPair.sort_custom(debug_sort_by_value_and_then_suit)
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "jack"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "jack"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "three"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "eight"
+	cardCopy.cardSuit = deck.suits[2]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "two"
+	cardCopy.cardSuit = deck.suits[3]
+
+func generate_losing_hand():
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "jack"
+	cardCopy.cardSuit = deck.suits[3]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "ace"
+	cardCopy.cardSuit = deck.suits[0]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "three"
+	cardCopy.cardSuit = deck.suits[1]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "eight"
+	cardCopy.cardSuit = deck.suits[2]
+	cardCopy = cardThing.instantiate()
+	add_child(cardCopy)
+	debugHandJacksOrBetter.append(cardCopy)
+	cardCopy.cardValue = "two"
+	cardCopy.cardSuit = deck.suits[3]
 
 func debug_sort_by_suit_and_then_value(a, b):
 	if a[1] == b[1]:
@@ -167,7 +344,7 @@ func debug_detect_royal_flush():
 	var validHand = ["ace", "ten", "jack", "queen", "king"]
 	var validValues = []
 	var validSuits
-	var hand = debugHandJacksOrBetter
+	var hand = debugHandRoyalFlush
 	for k in hand:
 		if k.has("ace"):
 			validValues.append("ace")
@@ -234,7 +411,7 @@ func debug_detect_four_of_a_kind():
 
 func debug_detect_full_house():
 	var handValues = []
-	var hand = debugHandJacksOrBetter
+	var hand = debugHandFullHouse
 	var maxValue = 0
 	var minValue = 0
 	for n in hand:
@@ -338,3 +515,36 @@ func baby_sort(a, b):
 	if deck.values[a] < deck.values[b]:
 		return true
 	return false
+
+func debug_detect_all_hands():
+	if !debugHandRoyalFlush.is_empty() && handDetection.detect_royal_flush(debugHandRoyalFlush):
+		handID.set_text("You win! (Royal flush-style)")
+		winSong.play()
+	if !debugHandStraightFlush.is_empty() && handDetection.detect_straight_flush(debugHandStraightFlush):
+		handID.set_text("You win! (Straight flush-style)")
+		winSong.play()
+	if !debugHandFourOfAKind.is_empty() && handDetection.detect_four_of_a_kind(debugHandFourOfAKind):
+		handID.set_text("You win! (Four-of-a-kind-style)")
+		winSong.play()
+	if !debugHandFullHouse.is_empty() && handDetection.detect_full_house(debugHandFullHouse):
+		handID.set_text("You win! (Full house-style)")
+		winSong.play()
+	if !debugHandPeasantFlush.is_empty() && handDetection.detect_peasant_flush(debugHandPeasantFlush):
+		handID.set_text("You win! (Flush-style)")
+		winSong.play()
+	if !debugHandRegularStraight.is_empty() && handDetection.detect_regular_straight(debugHandRegularStraight):
+		handID.set_text("You win! (Straight-style)")
+		winSong.play()
+	if !debugHandThreeOfAKind.is_empty() && handDetection.detect_three_of_a_kind(debugHandThreeOfAKind):
+		handID.set_text("You win! (Three-of-a-kind-style)")
+		winSong.play()
+	if !debugHandTwoPair.is_empty() && handDetection.detect_two_pair(debugHandTwoPair):
+		handID.set_text("You win! (Two pair-style)")
+		winSong.play()
+	if !debugHandJacksOrBetter.is_empty() && handDetection.detect_jacks_or_better(debugHandJacksOrBetter):
+		handID.set_text("You win! (Better than nothing-style)")
+		winSong.play()
+
+func debug_detect_losing_hand():
+	handID.set_text("No win for you, muchacho")
+	loseSong.play()

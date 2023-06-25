@@ -48,6 +48,7 @@ var childToRemove = 6
 var firstCard = -5
 var lastCard = 0
 var fiveHundredUnitsOffscreen
+var wallet = 0
 
 var winningHandType = {
 	"royal_flush" = "royal flush",
@@ -70,6 +71,12 @@ func _ready():
 	drawLabel.set_text("Draw")
 	randomPitch = randf_range(0.5, 1.5)
 	cardShuffle.set_pitch_scale(randomPitch)
+	deals = 0
+	newHand.clear()
+	tempHand.clear()
+	betUpButton.disabled = false
+	betDownButton.disabled = false
+	wallet = playerStats.playerMoney
 
 #-- sets the random pitch for when the cards are dealt
 #-- also keeps track of if the "draw" button signifies
@@ -93,18 +100,18 @@ func draw_hand():
 			drawLabel.set_text("Wait...")
 			await get_tree().create_timer(2.5).timeout
 			drawButton.disabled = false
-			drawLabel.set_text("New Hand?")
+			drawLabel.set_text("Wait...")
 			detectHand.detect_all_hands(newHand)
 #			newHand.sort_custom(sort_by_suit_and_then_value)
 			handFinished = true
+			if winSong.playing:
+				await get_tree().create_timer(7.0).timeout
+				get_tree().change_scene_to_file("res://Scenes/play_again.tscn")
+			else:
+				await get_tree().create_timer(1.0).timeout
+				get_tree().change_scene_to_file("res://Scenes/play_again.tscn")
 		phase.game_finished:
-			winLoseLabel.hide()
-			for woosh in range(firstCard, lastCard):
-				get_child(woosh).queue_free()
-			deals = 0
-			deck.set_up_deck()
-			drawLabel.set_text("Draw")
-			print("You drew a new hand!")
+			pass
 
 #-- handles showing the initial new hand
 func show_hand():
@@ -203,8 +210,8 @@ func sort_by_suit_and_then_value(a, b):
 	return false
 
 func set_money_on_ui():
-	playerStats.playerMoney -= playerStats.currentBet
-	playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+	wallet -= playerStats.currentBet
+	playerStats.moneyLabel.set_text(" Credit: %s" % wallet)
 
 func _on_first_hand_drawn():
 	drawButton.disabled = false
@@ -217,6 +224,7 @@ func _on_winning_hand(typeOfHand, payout):
 		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
 		winLoseLabel.show()
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		playerStats.playerMoney = wallet
 		return true
 	if typeOfHand == "straight_flush":
 		playerStats.playerMoney += playerStats.currentBet * payout
@@ -224,6 +232,7 @@ func _on_winning_hand(typeOfHand, payout):
 		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
 		winLoseLabel.show()
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		playerStats.playerMoney = wallet
 		return true
 	if typeOfHand == "four_of_a_kind":
 		playerStats.playerMoney += playerStats.currentBet * payout
@@ -231,6 +240,7 @@ func _on_winning_hand(typeOfHand, payout):
 		winLoseLabel.set_text("You got %s!" % winningHandType[typeOfHand])
 		winLoseLabel.show()
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		playerStats.playerMoney = wallet
 		return true
 	if typeOfHand == "full_house":
 		playerStats.playerMoney += playerStats.currentBet * payout
@@ -238,6 +248,7 @@ func _on_winning_hand(typeOfHand, payout):
 		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
 		winLoseLabel.show()
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		playerStats.playerMoney = wallet
 		return true
 	if typeOfHand == "flush":
 		playerStats.playerMoney += playerStats.currentBet * payout
@@ -245,6 +256,7 @@ func _on_winning_hand(typeOfHand, payout):
 		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
 		winLoseLabel.show()
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		playerStats.playerMoney = wallet
 		return true
 	if typeOfHand == "straight":
 		playerStats.playerMoney += playerStats.currentBet * payout
@@ -252,6 +264,7 @@ func _on_winning_hand(typeOfHand, payout):
 		winLoseLabel.set_text("You got a %s!" % winningHandType[typeOfHand])
 		winLoseLabel.show()
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		playerStats.playerMoney = wallet
 		return true
 	if typeOfHand == "three_of_a_kind":
 		playerStats.playerMoney += playerStats.currentBet * payout
@@ -259,6 +272,7 @@ func _on_winning_hand(typeOfHand, payout):
 		winLoseLabel.set_text("You got %s!" % winningHandType[typeOfHand])
 		winLoseLabel.show()
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		playerStats.playerMoney = wallet
 		return true
 	if typeOfHand == "two_pair":
 		playerStats.playerMoney += playerStats.currentBet * payout
@@ -266,6 +280,7 @@ func _on_winning_hand(typeOfHand, payout):
 		winLoseLabel.set_text("You got %s!" % winningHandType[typeOfHand])
 		winLoseLabel.show()
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		playerStats.playerMoney = wallet
 		return true
 	if typeOfHand == "jacks_or_better":
 		playerStats.playerMoney += playerStats.currentBet * payout
@@ -273,4 +288,5 @@ func _on_winning_hand(typeOfHand, payout):
 		winLoseLabel.set_text("You got %s!" % winningHandType[typeOfHand])
 		winLoseLabel.show()
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
+		playerStats.playerMoney = wallet
 		return true

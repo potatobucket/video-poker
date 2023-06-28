@@ -179,7 +179,6 @@ func discard_unheld_cards():
 #-- too lazy to change this part
 func _on_debug_pressed():
 	draw_hand()
-#	newHand.sort_custom(sort_by_suit_and_then_value)
 
 #-- waits until the shuffle sound is over to display the initial hand of cards
 func _on_card_shuffle_finished():
@@ -190,7 +189,6 @@ func _on_card_shuffle_finished():
 #-- after the unheld cards are discarded this function refills the
 #-- player's hand with new cards back up to five
 func refill_hand_with_new_cards():
-#	newHand.sort_custom(sort_by_suit_and_then_value)
 	if deals == 1 and handFinished == false:
 		for c in range(0, maxHandSize - newHand.size()):
 			newHand.append(deck.deck[0])
@@ -211,7 +209,6 @@ func sort_by_suit_and_then_value(a, b):
 
 func set_money_on_ui():
 	wallet -= playerStats.currentBet
-#	player.currentMonies = wallet
 	playerStats.moneyLabel.set_text(" Credit: %s" % wallet)
 
 func _on_first_hand_drawn():

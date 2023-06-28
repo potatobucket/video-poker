@@ -210,6 +210,7 @@ func sort_by_suit_and_then_value(a, b):
 func set_money_on_ui():
 	wallet -= playerStats.currentBet
 	playerStats.moneyLabel.set_text(" Credit: %s" % wallet)
+	player.currentMonies = wallet
 
 func _on_first_hand_drawn():
 	drawButton.disabled = false
@@ -288,3 +289,5 @@ func _on_winning_hand(typeOfHand, payout):
 		playerStats.moneyLabel.set_text(" Credit: %s" % playerStats.playerMoney)
 		player.currentMonies = playerStats.playerMoney
 		return true
+	else:
+		player.currentMonies = playerStats.playerMoney

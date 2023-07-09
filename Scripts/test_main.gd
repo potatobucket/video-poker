@@ -207,15 +207,19 @@ func sort_by_suit_and_then_value(a, b):
 		return true
 	return false
 
+#-- updates the UI to reflect the player's current amount of money
 func set_money_on_ui():
 	wallet -= playerStats.currentBet
 	playerStats.moneyLabel.set_text(" Credit: %s" % wallet)
 	player.currentMonies = wallet
 
+#-- sets the draw button to reflect which draw is happening
 func _on_first_hand_drawn():
 	drawButton.disabled = false
 	drawLabel.set_text("Draw\nAgain")
 
+#-- this sort of half works. it pays out correctly but it mixes some of the
+#-- hands up. I may work on this later but I also may not
 func _on_winning_hand(typeOfHand, payout):
 	if typeOfHand == "royal_flush":
 		playerStats.playerMoney += playerStats.currentBet * payout
